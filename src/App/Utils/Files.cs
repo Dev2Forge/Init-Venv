@@ -1,18 +1,19 @@
-// Init‑Venv — Initialize a virtual environment automatically.
-// Copyright (C) 2025 Dev2Forge
-//
-// This program is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation; either version 3 of the License, or
-// (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+/*
+ * Utils - Initialize a virtual environment automatically
+ * Copyright 2025 - 2025 Dev2Forge
+ * Licence: GPL-3
+ * More information: https://github.com/Dev2Forge/Init-Venv/blob/main/LICENSE
+ * Author: tutosrive (tutosrive@Dev2Forge.software)
+ * 
+ * File: \Files.cs
+ * Created: Friday, 18th July 2025 7:00:41 pm
+ * -----
+ * Last Modified: Saturday, 19th July 2025 12:43:47 am
+ * Modified By: tutosrive (tutosrive@Dev2Forge.software)
+ * -----
+ */
+
+using System.Text.Json;
 
 namespace InitVenv.src.App.Utils
 {
@@ -22,6 +23,39 @@ namespace InitVenv.src.App.Utils
         {
             string fullPath = Paths.ToUniversalPaths(arg);
             return Path.Exists(fullPath);
+        }
+
+        public static T ReadJSON<T>(string pathFile)
+        {
+            string content;
+            T? commands;
+            Console.WriteLine(string.Format("Tipo de \"T\": {0}", typeof(T)));
+
+            // Check file exist before read
+            if (Exists(pathFile))
+            {
+                using StreamReader reader = new(pathFile);
+                try
+                {
+                    content = reader.ReadToEnd();
+                    commands = JsonSerializer.Deserialize<T>(content);
+
+                    // The file is OK and was deserialized
+                    if (commands != null) return commands;
+
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+            else
+            {
+                throw new FileNotFoundException(string.Format("File \"{0}\" not found", pathFile));
+            }
+
+            throw new JsonException("Was not possible deserialize the file");
+
         }
     }
 }

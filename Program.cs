@@ -1,19 +1,19 @@
-﻿// Init‑Venv — Initialize a virtual environment automatically.
-// Copyright (C) 2025 Dev2Forge
-//
-// This program is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation; either version 3 of the License, or
-// (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+﻿/*
+ * Init-Venv - Initialize a virtual environment automatically
+ * Copyright 2025 - 2025 Dev2Forge
+ * Licence: GPL-3
+ * More information: https://github.com/Dev2Forge/Init-Venv/blob/main/LICENSE
+ * Author: tutosrive (tutosrive@Dev2Forge.software)
+ * 
+ * File: \Program.cs
+ * Created: Friday, 18th July 2025 7:00:41 pm
+ * -----
+ * Last Modified: Saturday, 19th July 2025 12:42:46 am
+ * Modified By: tutosrive (tutosrive@Dev2Forge.software)
+ * -----
+ */
 
+using InitVenv.src.App.models;
 using InitVenv.src.App.Utils;
 
 namespace InitVenv
@@ -24,6 +24,9 @@ namespace InitVenv
         {
             string? os = OS.GetOS();
             Console.WriteLine(os);
+
+            WindowsCommands readed = Files.ReadJSON<WindowsCommands>("./src/App/configs/commands/Windows.jsonc");
+            Console.WriteLine(readed.ActivateVenv);
         }
     }
 }
