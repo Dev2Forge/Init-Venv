@@ -8,11 +8,12 @@
  * File: \Program.cs
  * Created: Friday, 18th July 2025 7:00:41 pm
  * -----
- * Last Modified: Friday, 18th July 2025 11:30:32 pm
+ * Last Modified: Saturday, 19th July 2025 12:42:46 am
  * Modified By: tutosrive (tutosrive@Dev2Forge.software)
  * -----
  */
 
+using InitVenv.src.App.models;
 using InitVenv.src.App.Utils;
 
 namespace InitVenv
@@ -23,6 +24,9 @@ namespace InitVenv
         {
             string? os = OS.GetOS();
             Console.WriteLine(os);
+
+            WindowsCommands readed = Files.ReadJSON<WindowsCommands>("./src/App/configs/commands/Windows.jsonc");
+            Console.WriteLine(readed.ActivateVenv);
         }
     }
 }
