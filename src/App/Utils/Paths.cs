@@ -8,7 +8,7 @@
  * File: \Paths.cs
  * Created: Friday, 18th July 2025 7:00:41 pm
  * -----
- * Last Modified: Saturday, 19th July 2025 10:59:24 pm
+ * Last Modified: Sunday, 20th July 2025 1:36:00 am
  * Modified By: tutosrive (tutosrive@Dev2Forge.software)
  * -----
  */
@@ -25,6 +25,17 @@ namespace InitVenv.src.App.Utils
         public static string ToUniversalPaths(string path)
         {
             return path.Replace("\\", "/");
+        }
+
+        public static string AbsoluteUniversalPath(string path)
+        {
+            try
+            {
+                return ToUniversalPaths(Path.GetFullPath(path));
+            }
+            catch (Exception) { throw; }
+
+            throw new Exception("The absolute path could not be determined");
         }
     }
 }

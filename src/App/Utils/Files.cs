@@ -8,7 +8,7 @@
  * File: \Files.cs
  * Created: Friday, 18th July 2025 7:00:41 pm
  * -----
- * Last Modified: Saturday, 19th July 2025 11:26:57 pm
+ * Last Modified: Sunday, 20th July 2025 3:30:57 am
  * Modified By: tutosrive (tutosrive@Dev2Forge.software)
  * -----
  */
@@ -43,6 +43,11 @@ namespace InitVenv.src.App.Utils
             string content;
             T? commands;
 
+            // Get absolute "Universal path"
+            pathFile = Paths.AbsoluteUniversalPath(pathFile);
+
+            Console.WriteLine($"PathFile => | {pathFile} |");
+
             // Check file exist before read
             if (Exists(pathFile))
             {
@@ -68,7 +73,6 @@ namespace InitVenv.src.App.Utils
             }
 
             throw new JsonException(string.Format("Was not possible deserialize the file \"{0}\"", pathFile));
-
         }
     }
 }
