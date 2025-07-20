@@ -8,19 +8,16 @@
  * File: \windows.commands.cs
  * Created: Friday, 18th July 2025 11:51:38 pm
  * -----
- * Last Modified: Saturday, 19th July 2025 12:01:55 am
+ * Last Modified: Sunday, 20th July 2025 3:23:51 am
  * Modified By: tutosrive (tutosrive@Dev2Forge.software)
  * -----
  */
 
+using InitVenv.src.App.Utils;
+
 namespace InitVenv.src.App.models
 {
-    public class WindowsCommands
+    public class WindowsCommands : IOsCommands
     {
-        public required string PipPaths { get; set; }
-        public required string PythonPaths { get; set; }
-        public required string CreateVenv { get; set; }
-        public required string ActivateVenv { get; set; }
-        public required string RequirementsInstall { get; set; }
     }
 }
