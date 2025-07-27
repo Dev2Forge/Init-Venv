@@ -1,0 +1,47 @@
+{
+  "psi-header.config": {
+    "forceToTop": true,
+    "blankLinesAfter": 1,
+    "author": "tutosrive",
+    "authorEmail": "tutosrive@Dev2Forge.software",
+    "license": "Custom",
+    "year": "${date:YYYY}",
+    "autoAdd": true
+  },
+  "psi-header.variables": [
+    ["projectCreationYear", "2025"],
+    ["projectName", "Init-Venv"],
+    ["projectURI", "https://github.com/Dev2Forge/Init-Venv"],
+    ["projectDescription", "Initialize a virtual environment automatically"],
+    ["copyrightHolder", "Dev2Forge"],
+    ["licenseType", "GPL-3"]
+  ],
+  "psi-header.templates": [
+    {
+      "language": "*",
+      "template": [
+        "<<projectName>> - <<projectDescription>>",
+        "Copyright <<projectCreationYear>> - <<year>> <<copyrightHolder>>",
+        "Licence: <<licenseType>>",
+        "More information: <<projectURI>>/blob/main/LICENSE",
+        "Author: <<author>> (<<authorEmail>>)",
+        "",
+        "File: <<fileRelativePath>>",
+        "Created: <<filecreated('dddd, Do MMMM YYYY h:mm:ss a')>>",
+        "-----",
+        "Last Modified: <<dateformat('dddd, Do MMMM YYYY h:mm:ss a')>>",
+        "Modified By: <<author>> (<<authorEmail>>)",
+        "-----"
+      ]
+    }
+  ],
+  "psi-header.changes-tracking": {
+    "isActive": true,
+    "autoHeader": "autoSave",
+    "modDateFormat": "dddd, Do MMMM YYYY h:mm:ss a",
+    "modAuthor": "tutosrive",
+    "enforceHeader": true,
+    "exclude": ["json", "jsonc", "gitignore", "md", "txt", "sln", "csproj"],
+    "excludeGlob": ["**/settings.json", "**/*.sln", "**/*.csproj", "**/.gitignore", "**/LICENSE", "**/README.md"]
+  }
+}
