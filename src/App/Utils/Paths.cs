@@ -8,12 +8,12 @@
  * File: \Paths.cs
  * Created: Friday, 18th July 2025 7:00:41 pm
  * -----
- * Last Modified: Sunday, 20th July 2025 1:36:00 am
+ * Last Modified: Sunday, 27th July 2025 1:44:41 pm
  * Modified By: tutosrive (tutosrive@Dev2Forge.software)
  * -----
  */
 
-namespace InitVenv.src.App.Utils
+namespace InitVenv.src.App.utils
 {
     public static class Paths
     {

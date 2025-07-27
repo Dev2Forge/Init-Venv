@@ -8,12 +8,12 @@
  * File: \os.commands.cs
  * Created: Sunday, 20th July 2025 12:32:02 am
  * -----
- * Last Modified: Sunday, 20th July 2025 3:32:49 am
+ * Last Modified: Sunday, 27th July 2025 1:58:02 pm
  * Modified By: tutosrive (tutosrive@Dev2Forge.software)
  * -----
  */
 
-using InitVenv.src.App.Utils;
+using InitVenv.src.App.utils;
 
 namespace InitVenv.src.App.models
 {
@@ -44,9 +44,10 @@ namespace InitVenv.src.App.models
         /// Load the configs for the OS
         /// </summary>
         /// <typeparam name="T">The class Type</typeparam>
-        /// <returns></returns>
-        public static T LoadConfigs<T>(string OSName) where T : IOsCommands
+        /// <returns>A object with the OS commands (Object type "T")</returns>
+        public static T LoadConfigs<T>() where T : IOsCommands
         {
+            string OSName = typeof(T).Name.Replace("Commands", "");
             T configs = Files.ReadJSON<T>($"./src/App/configs/commands/{OSName}.jsonc");
             return configs;
         }

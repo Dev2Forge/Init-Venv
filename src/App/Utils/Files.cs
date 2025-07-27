@@ -8,14 +8,14 @@
  * File: \Files.cs
  * Created: Friday, 18th July 2025 7:00:41 pm
  * -----
- * Last Modified: Sunday, 20th July 2025 3:30:57 am
+ * Last Modified: Sunday, 27th July 2025 2:07:13 pm
  * Modified By: tutosrive (tutosrive@Dev2Forge.software)
  * -----
  */
 
 using System.Text.Json;
 
-namespace InitVenv.src.App.Utils
+namespace InitVenv.src.App.utils
 {
     public static class Files
     {
