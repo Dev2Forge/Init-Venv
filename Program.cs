@@ -8,7 +8,7 @@
  * File: \Program.cs
  * Created: Friday, 18th July 2025 7:00:41 pm
  * -----
- * Last Modified: Sunday, 20th July 2025 3:33:56 am
+ * Last Modified: Sunday, 27th July 2025 1:57:23 pm
  * Modified By: tutosrive (tutosrive@Dev2Forge.software)
  * -----
  */
@@ -21,7 +21,7 @@ namespace InitVenv
     {
         public static void Main(string[] args)
         {
-            WindowsCommands win1 = WindowsCommands.LoadConfigs<WindowsCommands>("Windows");
+            WindowsCommands win1 = IOsCommands.LoadConfigs<WindowsCommands>();
             string str = win1.ToString();
 
             Console.WriteLine(str);
