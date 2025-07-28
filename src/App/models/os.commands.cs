@@ -8,16 +8,17 @@
  * File: \os.commands.cs
  * Created: Sunday, 20th July 2025 12:32:02 am
  * -----
- * Last Modified: Sunday, 27th July 2025 1:58:02 pm
+ * Last Modified: Sunday, 27th July 2025 8:40:06 pm
  * Modified By: tutosrive (tutosrive@Dev2Forge.software)
  * -----
  */
 
+using System.Reflection;
 using InitVenv.src.App.utils;
 
 namespace InitVenv.src.App.models
 {
-    public class IOsCommands()
+    public abstract class IOsCommands()
     {
         /// <summary>
         /// On windows, command to show the "pip"
@@ -62,6 +63,36 @@ namespace InitVenv.src.App.models
             Requirements Install: {this.RequirementsInstall}";
             return response;
 
+        }
+
+        /// <summary>
+        /// Get the properties of this Object
+        /// </summary>
+        /// <returns>A string array that contains all object properties</returns>
+        /// <exception cref="Exception"></exception>
+        public static string[] Properties()
+        {
+            PropertyInfo[] props = typeof(IOsCommands).GetProperties();
+            string[] propStrings = new string[props.Length];
+            if (props != null)
+            {
+                for (int i = 0; i < props.Length; i++)
+                {
+                    propStrings[i] = props[i].Name;
+                }
+
+                return propStrings;
+            }
+            throw new Exception("Error trying get properties");
+        }
+
+        public static string GetProperty(IOsCommands instance, string property)
+        {
+            string? value = typeof(IOsCommands).GetProperty(property)?.GetValue(instance)?.ToString();
+
+            if (value != null) return value;
+
+            throw new Exception("It was not possible to obtain the value of the property");
         }
     }
 }

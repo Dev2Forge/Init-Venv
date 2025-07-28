@@ -8,23 +8,21 @@
  * File: \Program.cs
  * Created: Friday, 18th July 2025 7:00:41 pm
  * -----
- * Last Modified: Sunday, 27th July 2025 1:57:23 pm
+ * Last Modified: Sunday, 27th July 2025 8:17:43 pm
  * Modified By: tutosrive (tutosrive@Dev2Forge.software)
  * -----
  */
 
-using InitVenv.src.App.models;
+using App;
 
 namespace InitVenv
 {
     class App
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
-            WindowsCommands win1 = IOsCommands.LoadConfigs<WindowsCommands>();
-            string str = win1.ToString();
-
-            Console.WriteLine(str);
+            Console.WriteLine("Init-Venv (C) 2025 - Dev2Forge\nBy Tutos Rive\nAll Rights Reserved.\n");
+            await Init.Run();
         }
     }
 }
