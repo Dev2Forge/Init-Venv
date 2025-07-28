@@ -8,12 +8,12 @@
  * File: \OS.cs
  * Created: Friday, 18th July 2025 7:00:41 pm
  * -----
- * Last Modified: Sunday, 27th July 2025 1:46:52 pm
+ * Last Modified: Sunday, 27th July 2025 8:34:44 pm
  * Modified By: tutosrive (tutosrive@Dev2Forge.software)
  * -----
  */
 
-namespace InitVenv.src.App.Utils
+namespace InitVenv.src.App.utils
 {
     public class OS
     {
