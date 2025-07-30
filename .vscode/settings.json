@@ -42,6 +42,6 @@
     "modAuthor": "tutosrive",
     "enforceHeader": true,
     "exclude": ["json", "jsonc", "gitignore", "md", "txt", "sln", "csproj"],
-    "excludeGlob": ["**/settings.json", "**/*.sln", "**/*.csproj", "**/.gitignore", "**/LICENSE", "**/README.md"]
+    "excludeGlob": ["**/.editorconfig", "**/settings.json", "**/*.sln", "**/*.csproj", "**/.gitignore", "**/LICENSE", "**/README.md"]
   }
 }
