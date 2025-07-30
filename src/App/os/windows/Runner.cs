@@ -1,52 +1,30 @@
 /*
- * models - Initialize a virtual environment automatically
+ * windows - Initialize a virtual environment automatically
  * Copyright 2025 - 2025 Dev2Forge
  * Licence: GPL-3
  * More information: https://github.com/Dev2Forge/Init-Venv/blob/main/LICENSE
  * Author: tutosrive (tutosrive@Dev2Forge.software)
  * 
- * File: \windows.commands.cs
- * Created: Friday, 18th July 2025 11:51:38 pm
+ * File: \Runner.cs
+ * Created: Monday, 28th July 2025 2:36:53 pm
  * -----
- * Last Modified: Sunday, 27th July 2025 9:20:26 pm
+ * Last Modified: Monday, 28th July 2025 3:57:47 pm
  * Modified By: tutosrive (tutosrive@Dev2Forge.software)
  * -----
  */
 
 using System.Diagnostics;
 using System.Text;
+using InitVenv.src.App.os.windows.models;
 
-namespace InitVenv.src.App.models
+namespace InitVenv.src.App.os.windows
 {
-    public class WindowsCommands : IOsCommands
+    class WindowsRunner
     {
-        public static async Task<CommandResult> ExecuteCommandAsync(string filename, string argName, bool keep = false, bool userShell = false, bool wait = true)
+        public async Task<CommandResult> ExecuteCommandAsync(string filename, string command, bool keep = false, bool userShell = false, bool wait = true)
         {
             // Keep the console while command is completed
             string ConsoleKeep = keep ? "/k" : "/c";
-
-            WindowsCommands commands = LoadConfigs<WindowsCommands>();
-            string? command = null;
-            int index = 0;
-            var propertiesCommands = Properties();
-
-            // Validate Property name (command name)
-            while (index < propertiesCommands.Length && command == null)
-            {
-                string prop = propertiesCommands[index];
-                if (prop != argName)
-                {
-                    if (prop == propertiesCommands.Last())
-                    {
-                        throw new ArgumentException("The \"argName\" is invalid");
-                    }
-                }
-                else
-                {
-                    command = GetProperty(commands, prop);
-                }
-                index++;
-            }
 
             Console.WriteLine($"[INFO] Executing command: \"{command}\"");
 
@@ -154,6 +132,5 @@ namespace InitVenv.src.App.models
                 };
             }
         }
-
     }
 }

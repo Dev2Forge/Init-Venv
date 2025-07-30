@@ -8,18 +8,21 @@
  * File: \WindowsCommandsResult.cs
  * Created: Sunday, 27th July 2025 8:42:24 pm
  * -----
- * Last Modified: Sunday, 27th July 2025 8:42:33 pm
+ * Last Modified: Monday, 28th July 2025 3:12:01 pm
  * Modified By: tutosrive (tutosrive@Dev2Forge.software)
  * -----
  */
 
 using System.Collections;
 
-public class CommandResult
+namespace InitVenv.src.App.os.windows.models
 {
-    public bool Success { get; set; }
-    public string Output { get; set; } = string.Empty;
-    public string Error { get; set; } = string.Empty;
-    public int ExitCode { get; set; }
-    public IDictionary? ExceptionData { get; set; }
+    public class CommandResult
+    {
+        public bool Success { get; set; }
+        public string Output { get; set; } = string.Empty;
+        public string Error { get; set; } = string.Empty;
+        public int ExitCode { get; set; }
+        public IDictionary? ExceptionData { get; set; }
+    }
 }
