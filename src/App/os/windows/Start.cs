@@ -8,12 +8,12 @@
  * File: \Start.cs
  * Created: Sunday, 27th July 2025 8:31:25 pm
  * -----
- * Last Modified: Sunday, 27th July 2025 8:46:31 pm
+ * Last Modified: Tuesday, 29th July 2025 7:40:57 pm
  * Modified By: tutosrive (tutosrive@Dev2Forge.software)
  * -----
  */
 
-using InitVenv.src.App.models;
+using InitVenv.src.App.os.windows.models;
 
 namespace InitVenv.src.App.os.windows
 {
@@ -21,14 +21,22 @@ namespace InitVenv.src.App.os.windows
     {
         public static async Task Run()
         {
-            CommandResult result = await WindowsCommands.ExecuteCommandAsync("cmd.exe", "PipPaths");
-            if (result.ExceptionData != null)
+            // Objects instances
+            WindowsRunner runner = new();
+            Validators validators = new(runner);
+            Commands commands = new();
+
+            // Validations
+            bool pythonIsOk = await validators.CheckPythonPaths();
+            bool pipIsOk = await validators.CheckPipPaths();
+            bool requirementsIsOk = validators.CheckRequirementsFile();
+
+            // Commands Executions
+            /* if (pythonIsOk)
             {
-                foreach (var item in result.ExceptionData)
-                {
-                    Console.WriteLine(item);
-                }
-            }
+                CommandResult resultPythonCommand = await runner.ExecuteCommandAsync("cmd.exe", commands.CreateVenv);
+                Console.WriteLine(resultPythonCommand.Error);
+            } */
         }
     }
 }

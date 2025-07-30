@@ -1,7 +1,0 @@
-{
-  "PipPaths": "where pip",
-  "PythonPaths": "where python",
-  "CreateVenv": "python -m venv .venv",
-  "ActivateVenv": ".venv\\Scripts\\activate",
-  "RequirementsInstall": "pip install -r requirements.txt"
-}

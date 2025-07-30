@@ -1,0 +1,8 @@
+root = true
+
+[*.cs]
+# Requerir this para miembros de instancia
+dotnet_style_qualification_for_field = true:error
+dotnet_style_qualification_for_property = true:error
+dotnet_style_qualification_for_method = true:error
+dotnet_style_qualification_for_event = true:error

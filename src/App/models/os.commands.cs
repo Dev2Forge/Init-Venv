@@ -8,7 +8,7 @@
  * File: \os.commands.cs
  * Created: Sunday, 20th July 2025 12:32:02 am
  * -----
- * Last Modified: Sunday, 27th July 2025 8:40:06 pm
+ * Last Modified: Monday, 28th July 2025 2:53:08 pm
  * Modified By: tutosrive (tutosrive@Dev2Forge.software)
  * -----
  */
@@ -23,36 +23,23 @@ namespace InitVenv.src.App.models
         /// <summary>
         /// On windows, command to show the "pip"
         /// </summary>
-        public required string PipPaths { get; set; }
+        public abstract string PipPaths { get; }
         /// <summary>
         /// Find out the route of the "python"
         /// </summary>
-        public required string PythonPaths { get; set; }
+        public abstract string PythonPaths { get; }
         /// <summary>
         /// Command to create new "venv"
         /// </summary>
-        public required string CreateVenv { get; set; }
+        public abstract string CreateVenv { get; }
         /// <summary>
         /// Is used to activate the venv (usally is ".\venv\Scripts\activate" on Windows)
         /// </summary>
-        public required string ActivateVenv { get; set; }
+        public abstract string ActivateVenv { get; }
         /// <summary>
         /// Usually is "pip -r requirements.txt"
         /// </summary>
-        public required string RequirementsInstall { get; set; }
-
-        /// <summary>
-        /// Load the configs for the OS
-        /// </summary>
-        /// <typeparam name="T">The class Type</typeparam>
-        /// <returns>A object with the OS commands (Object type "T")</returns>
-        public static T LoadConfigs<T>() where T : IOsCommands
-        {
-            string OSName = typeof(T).Name.Replace("Commands", "");
-            T configs = Files.ReadJSON<T>($"./src/App/configs/commands/{OSName}.jsonc");
-            return configs;
-        }
-
+        public abstract string RequirementsInstall { get; }
         public override string ToString()
         {
             string response = @$"OS Commands:
@@ -65,12 +52,14 @@ namespace InitVenv.src.App.models
 
         }
 
+        public static T Create<T>() where T : IOsCommands, new() => new();
+
         /// <summary>
         /// Get the properties of this Object
         /// </summary>
         /// <returns>A string array that contains all object properties</returns>
         /// <exception cref="Exception"></exception>
-        public static string[] Properties()
+        public string[] Properties()
         {
             PropertyInfo[] props = typeof(IOsCommands).GetProperties();
             string[] propStrings = new string[props.Length];
@@ -86,7 +75,7 @@ namespace InitVenv.src.App.models
             throw new Exception("Error trying get properties");
         }
 
-        public static string GetProperty(IOsCommands instance, string property)
+        public string GetProperty(IOsCommands instance, string property)
         {
             string? value = typeof(IOsCommands).GetProperty(property)?.GetValue(instance)?.ToString();
 
