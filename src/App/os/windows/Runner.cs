@@ -8,7 +8,7 @@
  * File: \Runner.cs
  * Created: Monday, 28th July 2025 2:36:53 pm
  * -----
- * Last Modified: Monday, 28th July 2025 3:57:47 pm
+ * Last Modified: Tuesday, 29th July 2025 7:59:34 pm
  * Modified By: tutosrive (tutosrive@Dev2Forge.software)
  * -----
  */
@@ -19,14 +19,18 @@ using InitVenv.src.App.os.windows.models;
 
 namespace InitVenv.src.App.os.windows
 {
-    class WindowsRunner
+    /// <summary>
+    /// Contains methods to run commands and others
+    /// </summary>
+    class WindowsRunner()
     {
+
         public async Task<CommandResult> ExecuteCommandAsync(string filename, string command, bool keep = false, bool userShell = false, bool wait = true)
         {
             // Keep the console while command is completed
             string ConsoleKeep = keep ? "/k" : "/c";
 
-            Console.WriteLine($"[INFO] Executing command: \"{command}\"");
+            Console.WriteLine($"[INFO] Try executing command: \"{command}\"");
 
             try
             {

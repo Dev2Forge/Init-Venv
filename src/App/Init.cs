@@ -8,7 +8,7 @@
  * File: \Main.cs
  * Created: Sunday, 27th July 2025 2:17:28 pm
  * -----
- * Last Modified: Sunday, 27th July 2025 8:39:24 pm
+ * Last Modified: Tuesday, 29th July 2025 8:33:47 pm
  * Modified By: tutosrive (tutosrive@Dev2Forge.software)
  * -----
  */
@@ -23,14 +23,14 @@ namespace App
 
     public class Init
     {
-        public static async Task Run()
+        public static async Task Run(string path)
         {
             string? os = OS.GetOS();
 
             switch (os)
             {
                 case "Windows":
-                    await WindowsInit.Run();
+                    await WindowsInit.Run(path);
                     break;
                 case "MacOS":
                 case "Linux":
