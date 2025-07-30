@@ -8,7 +8,7 @@
  * File: \Files.cs
  * Created: Friday, 18th July 2025 7:00:41 pm
  * -----
- * Last Modified: Monday, 28th July 2025 2:56:10 pm
+ * Last Modified: Tuesday, 29th July 2025 8:12:17 pm
  * Modified By: tutosrive (tutosrive@Dev2Forge.software)
  * -----
  */
@@ -24,7 +24,7 @@ namespace InitVenv.src.App.utils
         /// <returns>A bool that indicates if exists or not</returns>
         public static bool Exists(string arg)
         {
-            string fullPath = Paths.ToUniversalPaths(arg);
+            string fullPath = Paths.AbsoluteUniversalPath(arg);
             return Path.Exists(fullPath);
         }
     }

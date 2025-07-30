@@ -8,7 +8,7 @@
  * File: \Validations.cs
  * Created: Monday, 28th July 2025 3:15:01 pm
  * -----
- * Last Modified: Tuesday, 29th July 2025 7:23:31 pm
+ * Last Modified: Tuesday, 29th July 2025 8:08:52 pm
  * Modified By: tutosrive (tutosrive@Dev2Forge.software)
  * -----
  */
@@ -65,6 +65,12 @@ namespace InitVenv.src.App.os.windows
         public bool CheckRequirementsFile()
         {
             bool ok = Files.Exists("./requirements.txt");
+            return ok;
+        }
+
+        public bool CheckWorkingDirExists(string path)
+        {
+            bool ok = Files.Exists(path);
             return ok;
         }
     }
