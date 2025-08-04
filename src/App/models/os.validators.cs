@@ -8,7 +8,7 @@
  * File: \os.validators.cs
  * Created: Monday, 28th July 2025 3:17:00 pm
  * -----
- * Last Modified: Tuesday, 29th July 2025 8:10:48 pm
+ * Last Modified: Sunday, 3rd August 2025 8:24:11 pm
  * Modified By: tutosrive (tutosrive@Dev2Forge.software)
  * -----
  */
@@ -30,8 +30,9 @@ namespace InitVenv.src.App.models
         /// <summary>
         /// Check that <strong>requirements.txt</strong> exists in the same <strong>.venv</strong> directory
         /// </summary>
+        /// <param name="workingDir">The path to the working directory</param>
         /// <returns>A bool that represents if <strong>requirements.txt</strong> exists</returns>
-        public abstract bool CheckRequirementsFile();
+        public abstract bool CheckRequirementsFile(string workingDir);
         /// <summary>
         /// Validate that the string path of working directory is valid and exists
         /// </summary>

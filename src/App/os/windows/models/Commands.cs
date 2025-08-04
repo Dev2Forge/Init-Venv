@@ -8,7 +8,7 @@
  * File: \windows.commands.cs
  * Created: Friday, 18th July 2025 11:51:38 pm
  * -----
- * Last Modified: Monday, 28th July 2025 3:10:53 pm
+ * Last Modified: Sunday, 3rd August 2025 8:58:56 pm
  * Modified By: tutosrive (tutosrive@Dev2Forge.software)
  * -----
  */
@@ -24,5 +24,7 @@ namespace InitVenv.src.App.os.windows.models
         public override string CreateVenv { get => "python -m venv .venv"; }
         public override string ActivateVenv { get => ".venv\\Scripts\\activate"; }
         public override string RequirementsInstall { get => "pip install -r requirements.txt"; }
+        public override string CheckRequirementsPip { get => "pip check"; }
+
     }
 }

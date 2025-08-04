@@ -8,7 +8,7 @@
  * File: \Program.cs
  * Created: Friday, 18th July 2025 7:00:41 pm
  * -----
- * Last Modified: Tuesday, 29th July 2025 8:35:53 pm
+ * Last Modified: Sunday, 3rd August 2025 6:56:53 pm
  * Modified By: tutosrive (tutosrive@Dev2Forge.software)
  * -----
  */
@@ -35,15 +35,21 @@ namespace InitVenv
                     throw new ArgumentException("The path to the directory is not valid or incorrect.");
                 }
 
-                await Init.Run(args[0]);
+                await Init.Run(args[0]).ContinueWith(FinishProgram);
             }
             catch (Exception e)
             {
-                Console.Write(@$"[ERROR] {e.Message}
-        Please, try execute again...
-        Press ENTER to close...");
+                Console.Write($"[ERROR]  {e.Message}\n\nPlease, try execute again...\nPress ENTER to close...");
                 Console.Read();
             }
+
+        }
+
+        private static void FinishProgram(Task t)
+        {
+            string msg = t.IsCompleted ? "Program exit Sucessfully!" : "Program exit with Errors";
+            Console.Write($"{msg}\nPress ENTER to close...");
+            Console.Read();
         }
     }
 }
