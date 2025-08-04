@@ -8,7 +8,7 @@
  * File: \os.commands.cs
  * Created: Sunday, 20th July 2025 12:32:02 am
  * -----
- * Last Modified: Monday, 28th July 2025 2:53:08 pm
+ * Last Modified: Sunday, 3rd August 2025 8:58:04 pm
  * Modified By: tutosrive (tutosrive@Dev2Forge.software)
  * -----
  */
@@ -40,6 +40,10 @@ namespace InitVenv.src.App.models
         /// Usually is "pip -r requirements.txt"
         /// </summary>
         public abstract string RequirementsInstall { get; }
+        /// <summary>
+        /// Usually is "pip check"
+        /// </summary>
+        public abstract string CheckRequirementsPip { get; }
         public override string ToString()
         {
             string response = @$"OS Commands:
@@ -47,7 +51,8 @@ namespace InitVenv.src.App.models
             Python Paths: {this.PythonPaths}
             Create Venv: {this.CreateVenv}
             Activate Venv: {this.ActivateVenv}
-            Requirements Install: {this.RequirementsInstall}";
+            Requirements Install: {this.RequirementsInstall}
+            Check Requirements Pip: {this.CheckRequirementsPip}";
             return response;
 
         }

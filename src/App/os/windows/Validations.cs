@@ -8,7 +8,7 @@
  * File: \Validations.cs
  * Created: Monday, 28th July 2025 3:15:01 pm
  * -----
- * Last Modified: Tuesday, 29th July 2025 8:08:52 pm
+ * Last Modified: Sunday, 3rd August 2025 9:11:09 pm
  * Modified By: tutosrive (tutosrive@Dev2Forge.software)
  * -----
  */
@@ -59,12 +59,25 @@ namespace InitVenv.src.App.os.windows
         }
 
         /// <summary>
+        /// Validate if <strong>requirements</strong> already installed in the venv
+        /// </summary>
+        /// <returns>A bool that indicate if <strong>requirements</strong> already installed</returns>
+        public async Task<bool> CheckRequirementsPip()
+        {
+            // TODO: Fix me!
+            bool ok = false;
+            CommandResult commandResult = await this._Runner.ExecuteCommandAsync("cmd.exe", this._commands.CheckRequirementsPip);
+            if (commandResult.Error.Trim().Equals("")) { ok = true; }
+            return ok;
+        }
+
+        /// <summary>
         /// Validate if <strong>requirements.txt</strong> (of python) exists in the same directory of <strong>.venv</strong> directory
         /// </summary>
         /// <returns>A bool that indicate if <strong>requirements.txt</strong> exists</returns>
-        public bool CheckRequirementsFile()
+        public bool CheckRequirementsFile(string workingDir)
         {
-            bool ok = Files.Exists("./requirements.txt");
+            bool ok = Files.Exists($"{workingDir}\\requirements.txt");
             return ok;
         }
 

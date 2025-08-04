@@ -8,7 +8,7 @@
  * File: \Runner.cs
  * Created: Monday, 28th July 2025 2:36:53 pm
  * -----
- * Last Modified: Tuesday, 29th July 2025 7:59:34 pm
+ * Last Modified: Sunday, 3rd August 2025 8:35:35 pm
  * Modified By: tutosrive (tutosrive@Dev2Forge.software)
  * -----
  */
@@ -22,19 +22,20 @@ namespace InitVenv.src.App.os.windows
     /// <summary>
     /// Contains methods to run commands and others
     /// </summary>
-    class WindowsRunner()
+    class WindowsRunner(string path)
     {
-
+        private readonly string workingDir = path;
         public async Task<CommandResult> ExecuteCommandAsync(string filename, string command, bool keep = false, bool userShell = false, bool wait = true)
         {
             // Keep the console while command is completed
             string ConsoleKeep = keep ? "/k" : "/c";
 
-            Console.WriteLine($"[INFO] Try executing command: \"{command}\"");
+            Console.WriteLine($"[ INFO ] Try executing command: \"{command}\"");
 
             try
             {
                 using Process process = new();
+                process.StartInfo.WorkingDirectory = this.workingDir;
                 process.StartInfo.UseShellExecute = userShell;
                 process.StartInfo.FileName = filename;
                 process.StartInfo.Arguments = $"{ConsoleKeep} {command}";
@@ -56,7 +57,7 @@ namespace InitVenv.src.App.os.windows
                         if (!string.IsNullOrEmpty(e.Data))
                         {
                             outputBuilder.AppendLine(e.Data);
-                            Console.WriteLine($"[OUT] {e.Data}");
+                            Console.WriteLine($"[ OUT  ] {e.Data}");
                         }
                     };
 
@@ -65,7 +66,7 @@ namespace InitVenv.src.App.os.windows
                         if (!string.IsNullOrEmpty(e.Data))
                         {
                             errorBuilder.AppendLine(e.Data);
-                            Console.WriteLine($"[ERROR] {e.Data}");
+                            Console.WriteLine($"[ ERROR] {e.Data}");
                         }
                     };
                 }
@@ -101,11 +102,11 @@ namespace InitVenv.src.App.os.windows
 
                 if (userShell)
                 {
-                    Console.WriteLine("[INFO] Command executed with shell (output not captured)");
+                    Console.WriteLine("[ INFO ] Command executed with shell (output not captured)");
                 }
                 else if (hasErrors)
                 {
-                    Console.WriteLine($"[WARN] Completed with errors (Exit Code: {exitCode})");
+                    Console.WriteLine($"[ WARN ] Completed with errors (Exit Code: {exitCode})");
                     if (!string.IsNullOrEmpty(error))
                     {
                         Console.WriteLine($"Errores: {error}");
@@ -113,7 +114,7 @@ namespace InitVenv.src.App.os.windows
                 }
                 else
                 {
-                    Console.WriteLine("[INFO] Operation successfully!");
+                    Console.WriteLine("[ INFO ] Operation successfully!");
                 }
 
                 return new CommandResult
@@ -126,7 +127,7 @@ namespace InitVenv.src.App.os.windows
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"[ERROR] Caused by: {ex.Message}");
+                Console.WriteLine($"[ERROR]  Caused by: {ex.Message}");
                 return new CommandResult
                 {
                     Success = false,
