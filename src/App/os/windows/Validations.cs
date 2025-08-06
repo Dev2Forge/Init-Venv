@@ -8,7 +8,7 @@
  * File: \Validations.cs
  * Created: Monday, 28th July 2025 3:15:01 pm
  * -----
- * Last Modified: Sunday, 3rd August 2025 9:11:09 pm
+ * Last Modified: Tuesday, 5th August 2025 7:42:38 pm
  * Modified By: tutosrive (tutosrive@Dev2Forge.software)
  * -----
  */
@@ -59,15 +59,16 @@ namespace InitVenv.src.App.os.windows
         }
 
         /// <summary>
-        /// Validate if <strong>requirements</strong> already installed in the venv
+        /// Validate if <strong>requirements</strong> already installed in the venv.
+        /// See https://pip.pypa.io/en/stable/cli/pip_check/
         /// </summary>
         /// <returns>A bool that indicate if <strong>requirements</strong> already installed</returns>
-        public async Task<bool> CheckRequirementsPip()
+        public async Task<bool> CheckRequirementsPip(string workingDir)
         {
-            // TODO: Fix me!
-            bool ok = false;
-            CommandResult commandResult = await this._Runner.ExecuteCommandAsync("cmd.exe", this._commands.CheckRequirementsPip);
-            if (commandResult.Error.Trim().Equals("")) { ok = true; }
+            // TODO: Debug me!
+            bool ok = true;
+            CommandResult commandResult = await this._Runner.ExecuteCommandAsync("cmd.exe", $"cd /d {workingDir} && {this._commands.ActivateVenv} && {this._commands.CheckRequirementsPip}");
+            if (commandResult.ExitCode == 0) { ok = false; }
             return ok;
         }
 
