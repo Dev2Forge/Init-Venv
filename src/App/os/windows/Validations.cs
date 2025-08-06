@@ -8,7 +8,7 @@
  * File: \Validations.cs
  * Created: Monday, 28th July 2025 3:15:01 pm
  * -----
- * Last Modified: Tuesday, 5th August 2025 7:42:38 pm
+ * Last Modified: Tuesday, 5th August 2025 7:46:40 pm
  * Modified By: tutosrive (tutosrive@Dev2Forge.software)
  * -----
  */
@@ -66,9 +66,9 @@ namespace InitVenv.src.App.os.windows
         public async Task<bool> CheckRequirementsPip(string workingDir)
         {
             // TODO: Debug me!
-            bool ok = true;
+            bool ok = false;
             CommandResult commandResult = await this._Runner.ExecuteCommandAsync("cmd.exe", $"cd /d {workingDir} && {this._commands.ActivateVenv} && {this._commands.CheckRequirementsPip}");
-            if (commandResult.ExitCode == 0) { ok = false; }
+            if (commandResult.ExitCode == 0) { ok = true; }
             return ok;
         }
 
