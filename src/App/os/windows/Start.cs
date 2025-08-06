@@ -8,10 +8,15 @@
  * File: \Start.cs
  * Created: Sunday, 27th July 2025 8:31:25 pm
  * -----
- * Last Modified: Sunday, 3rd August 2025 8:52:37 pm
+ * Last Modified: Wednesday, 6th August 2025 5:42:27 pm
  * Modified By: tutosrive (tutosrive@Dev2Forge.software)
  * -----
  */
+
+//  TODO: The command to activate the virtual environment
+// change for each name (.venv, venv, .env\, virtualenv, etc)
+// So, the name of virtual venv should be obtained to use it!
+// Can be in the "checkVenvExists" function...
 
 using InitVenv.src.App.os.windows.models;
 using InitVenv.src.App.utils;
@@ -30,19 +35,14 @@ namespace InitVenv.src.App.os.windows
             Validators validators = new(runner);
             Commands commands = new();
 
-
             // --------- Check that path is OK ---------
             CheckPath(validators, path);
 
-            // --------- Go to the working path/directory ---------
-            // CdToWorkingDir(runner, path);
-
             // --------- Try make the .venv folder ---------
-            await TryCreateVenv(validators, runner, commands, path);
-
+            bool venvIsOld = await TryCreateVenv(validators, runner, commands, path);
 
             // --------- Try install requirements.txt ---------
-            await TryInstallRequirements(validators, runner, commands, path);
+            await TryInstallRequirements(validators, runner, commands, path, venvIsOld);
 
             // --------- Try activate venv (in User Terminal and Kepp it!) ---------
             await TryActivateVenv(validators, runner, commands, path);
@@ -56,17 +56,7 @@ namespace InitVenv.src.App.os.windows
             }
         }
 
-        /* private static async void CdToWorkingDir(WindowsRunner r, string p)
-        {
-            CommandResult result = await r.ExecuteCommandAsync("cmd.exe", $"cd /d {p}");
-
-            if (!result.Error.Trim().Equals(""))
-            {
-                throw new Exception("Please, validate that the path exists and its name is correct");
-            }
-        } */
-
-        private static async Task TryCreateVenv(Validators v, WindowsRunner r, Commands c, string p)
+        private static async Task<bool> TryCreateVenv(Validators v, WindowsRunner r, Commands c, string p)
         {
             // --------- Validations python and existing venv ---------
             bool pythonIsOk = await v.CheckPythonPaths();
@@ -81,6 +71,8 @@ namespace InitVenv.src.App.os.windows
                 // TODO: Send Succefully message when completed (.ContinueWith)
                 await r.ExecuteCommandAsync("cmd.exe", c.CreateVenv);
             }
+
+            return venvExists;
         }
 
         private static async Task TryActivateVenv(Validators v, WindowsRunner r, Commands c, string p)
@@ -94,16 +86,33 @@ namespace InitVenv.src.App.os.windows
             }
         }
 
-        private static async Task TryInstallRequirements(Validators v, WindowsRunner r, Commands c, string p)
+        private static async Task TryInstallRequirements(Validators v, WindowsRunner r, Commands c, string p, bool isOldVenv)
         {
+            string completeCommand = $"cd /d {p} && {c.ActivateVenv} && {c.RequirementsInstall}";
             bool pipIsOk = await v.CheckPipPaths();
             bool fileRequirementsExists = v.CheckRequirementsFile(p);
+            bool requirementsIsInstall;
 
             // Try install the requirements from file
             if (pipIsOk && fileRequirementsExists)
             {
-                // TODO: Send Succefully message when completed (.ContinueWith)
-                await r.ExecuteCommandAsync("cmd.exe", $"cd /d {p} && {c.ActivateVenv} && {c.RequirementsInstall}");
+                // All requirements will be install
+                if (!isOldVenv)
+                {
+                    // TODO: Send Succefully message when completed (.ContinueWith)
+                    await r.ExecuteCommandAsync("cmd.exe", completeCommand);
+                }
+                else
+                {
+                    // Check if missing any requirement and try fix (Re-Install)
+                    requirementsIsInstall = await v.CheckRequirementsPip(p);
+                    Console.WriteLine($"Req are installed? => {requirementsIsInstall}");
+
+                    if (!requirementsIsInstall)
+                    {
+                        await r.ExecuteCommandAsync("cmd.exe", completeCommand);
+                    }
+                }
             }
         }
 
