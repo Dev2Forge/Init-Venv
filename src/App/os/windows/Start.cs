@@ -8,7 +8,7 @@
  * File: \Start.cs
  * Created: Sunday, 27th July 2025 8:31:25 pm
  * -----
- * Last Modified: Friday, 8th August 2025 10:52:06 pm
+ * Last Modified: Friday, 8th August 2025 11:04:16 pm
  * Modified By: tutosrive (tutosrive@Dev2Forge.software)
  * -----
  */
@@ -58,11 +58,11 @@ namespace InitVenv.src.App.os.windows
 
         private static async Task<bool> TryCreateVenv(Validators v, WindowsRunner r, Commands c, string p)
         {
-            // --------- Validations python and existing venv ---------
-            bool pythonIsOk = await v.CheckPythonPaths();
-
             // Local variables
             bool venvExists = CheckVenvExists(p);
+
+            // --------- Validations python and existing venv ---------
+            bool pythonIsOk = await v.CheckPythonPaths(venvExists);
 
             // Create the new virtualvenv
             if (!venvExists && pythonIsOk)
