@@ -8,7 +8,7 @@
   - Realicé este punto, se requiere refactorizar (Redundancias)/funcional
 - [ ] [Si ya existe un entorno virtual en la ruta, obtenerlo (el nombre)](#si-ya-existe-un-entorno-virtual-en-la-ruta-obtenerlo-el-nombre)
 - [ ] [Mejorar el manejo de Errores/Excepciones](#mejorar-el-manejo-de-erroresexcepciones)
-- [ ] [Error en requeriments.txt](#error-en-requirementstxt-añadido-después-de-crear-el-entorno-virtual)
+- [ ] [Error en requirements.txt](#error-en-requirementstxt-añadido-después-de-crear-el-entorno-virtual)
 
 ## Features
 
@@ -20,6 +20,9 @@
 - [ ] [Mejorar mensajes de ejecución]()
 
 ---
+
+<details>
+<summary><strong>## Fix</strong></summary>
 
 ## ¡Mejorar la validación de la ruta de Python!
 
@@ -37,6 +40,15 @@ Al momento de activar el entorno virtual, se requiere el nombre de la "carpeta",
 
 El manejo de errores está bastante "simple"/no robusto, si un comando arroja una excepción, la única acción que el programa toma, es imprimir el mensaje, y si es posible seguir. Pero no se tiene un sistema de Excepciones preciso.
 
+## Error en requirements.txt (Añadido después de crear el entorno virtual)
+
+Al ejecutarse en un directorio sin `requirements.txt`, el programa crea el entorno virtual sin errores. Si el usuario añade `requirements.txt` posteriormente (o si ya existe un `.venv`), el programa no está diseñado para instalar esos paquetes añadidos; en consecuencia, `pip check` no mostrará errores, porque nunca se ejecutó `pip install -r requirements.txt`.
+
+</details>
+
+<details>
+<summary><strong>## Features</strong></summary>
+
 ## Añadir soporte para Linux
 
 Actualmente el programa solo está escrito para Windows, hace falta añadir código para Linux.
@@ -45,11 +57,10 @@ Actualmente el programa solo está escrito para Windows, hace falta añadir cód
 
 Actualmente el programa solo está escrito para Windows, hace falta añadir código para MacOS.
 
-## Error en requirements.txt (Añadido después de crear el entorno virtual)
+</details>
 
-Al ejecutarse en un directorio sin `requirements.txt`, el programa crea el entorno virtual sin errores. Si el usuario añade `requirements.txt` posteriormente (o si ya existe un `.venv`), el programa no está diseñado para instalar esos paquetes añadidos; en consecuencia, `pip check` no mostrará errores, porque nunca se ejecutó `pip install -r requirements.txt`.
-
----
+<details>
+<summary><strong>## Others</strong></summary>
 
 ## Mejorar mensajes de ejecución
 
@@ -57,10 +68,12 @@ Los mensajes de la consola, muchas veces no son claros (Aunque solo son mensajes
 
 ```shell
 INFO: Could not find files for the given pattern(s).
-```
+````
 
 Un mejor mensaje sería:
 
 ```shell
 Make sure you have Python installed on your system (Also have it in your PATH)
 ```
+
+</details>
