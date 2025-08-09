@@ -8,7 +8,7 @@
  * File: \Start.cs
  * Created: Sunday, 27th July 2025 8:31:25 pm
  * -----
- * Last Modified: Wednesday, 6th August 2025 5:42:27 pm
+ * Last Modified: Friday, 8th August 2025 10:52:06 pm
  * Modified By: tutosrive (tutosrive@Dev2Forge.software)
  * -----
  */
@@ -32,7 +32,7 @@ namespace InitVenv.src.App.os.windows
 
             // --------- Objects instances ---------
             WindowsRunner runner = new(path);
-            Validators validators = new(runner);
+            Validators validators = new(runner, path);
             Commands commands = new();
 
             // --------- Check that path is OK ---------
@@ -50,7 +50,7 @@ namespace InitVenv.src.App.os.windows
 
         private static void CheckPath(Validators v, string p)
         {
-            if (!v.CheckWorkingDirExists(p))
+            if (!v.CheckWorkingDirExists())
             {
                 throw new ArgumentException($"The path ({p}) is not valid!");
             }
@@ -63,7 +63,6 @@ namespace InitVenv.src.App.os.windows
 
             // Local variables
             bool venvExists = CheckVenvExists(p);
-            Console.WriteLine($"The virtual venv exists? => {venvExists}");
 
             // Create the new virtualvenv
             if (!venvExists && pythonIsOk)
@@ -77,12 +76,14 @@ namespace InitVenv.src.App.os.windows
 
         private static async Task TryActivateVenv(Validators v, WindowsRunner r, Commands c, string p)
         {
-            bool pythonIsOk = await v.CheckPythonPaths();
+            // When a virtual venv exists
+            bool pythonIsOk = await v.CheckPythonPaths(true);
+            string _showVenvContentToUser = "echo ----Python Paths---- && where python && echo ----PIP Paths---- && where pip && echo ----Requirements list---- && pip list";
 
             if (pythonIsOk)
             {
                 // Try activate venv
-                await r.ExecuteCommandAsync("cmd.exe", c.ActivateVenv, true, true, false);
+                await r.ExecuteCommandAsync("cmd.exe", $"{c.ActivateVenv} && {_showVenvContentToUser}", true, true, false);
             }
         }
 
@@ -90,7 +91,7 @@ namespace InitVenv.src.App.os.windows
         {
             string completeCommand = $"cd /d {p} && {c.ActivateVenv} && {c.RequirementsInstall}";
             bool pipIsOk = await v.CheckPipPaths();
-            bool fileRequirementsExists = v.CheckRequirementsFile(p);
+            bool fileRequirementsExists = v.CheckRequirementsFile();
             bool requirementsIsInstall;
 
             // Try install the requirements from file
@@ -105,8 +106,7 @@ namespace InitVenv.src.App.os.windows
                 else
                 {
                     // Check if missing any requirement and try fix (Re-Install)
-                    requirementsIsInstall = await v.CheckRequirementsPip(p);
-                    Console.WriteLine($"Req are installed? => {requirementsIsInstall}");
+                    requirementsIsInstall = await v.CheckRequirementsPip();
 
                     if (!requirementsIsInstall)
                     {
