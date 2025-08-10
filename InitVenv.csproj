@@ -7,6 +7,33 @@
     <Nullable>enable</Nullable>
     <PublishTrimmed>true</PublishTrimmed>
     <TrimMode>full</TrimMode>
+
+    <!-- Properties -->
+    <Company>Dev2Forge</Company>
+    <Product>InitVenv</Product>
+    <Description>InitVenv - Initialize python virtual environments automatically</Description>
+    <AssemblyTitle>$(Description)</AssemblyTitle>
+    <Authors>Tutos Rive</Authors>
+    <Copyright>© 2025 Dev2Forge</Copyright>
+
+    <!-- Versions -->
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>0.1.0.0</FileVersion>
+  </PropertyGroup>
+
+  <!-- Windows x86 -->
+  <PropertyGroup Condition="'$(RuntimeIdentifier)' == 'win-x86'">
+    <AssemblyName>InitVenv-x86</AssemblyName>
+  </PropertyGroup>
+
+  <!-- Windows x64 -->
+  <PropertyGroup Condition="'$(RuntimeIdentifier)' == 'win-x64'">
+    <AssemblyName>InitVenv-x64</AssemblyName>
+  </PropertyGroup>
+
+  <!-- Windows ARM64 -->
+  <PropertyGroup Condition="'$(RuntimeIdentifier)' == 'win-arm64'">
+    <AssemblyName>InitVenv-ARM64</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
