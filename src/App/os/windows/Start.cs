@@ -44,6 +44,7 @@ namespace InitVenv.src.App.os.windows
             // --------- Try install requirements.txt ---------
             await TryInstallRequirements(validators, runner, commands, path, venvIsOld);
 
+            // FIXME: This command is running on any case (even when python NOT EXISTS)
             // --------- Try activate venv (in User Terminal and Kepp it!) ---------
             await TryActivateVenv(validators, runner, commands, path);
         }
