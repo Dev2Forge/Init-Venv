@@ -15,7 +15,7 @@
 
 **InitVenv** is a cross-platform automation tool that streamlines Python development workflow by automatically creating Python virtual environments, installing project dependencies from `requirements.txt`, and activating the environment with a single command execution. Currently supports Windows, with Linux and macOS support planned for future releases.
 
-## 🚀 Features
+## Features
 
 - **One-command setup**: Create Python virtual environment, install requirements, and activate with a single command
 - **Windows integration**: Works seamlessly with Windows File Explorer
@@ -23,12 +23,12 @@
 - **Path flexibility**: Supports both absolute and relative paths
 - **Zero configuration**: Just run and go
 
-## 📋 Requirements
+## Requirements
 
 - Python installed and added to system PATH
 - Windows operating system (currently Windows-only)
 
-## 🛠️ Installation
+## Installation
 
 1. Download the latest release from [SourceForge](https://sourceforge.net/projects/initvenv/)
 2. Run the installer
@@ -36,7 +36,7 @@
    - Copy `InitVenv-{architecture}.exe` and `InitVenv.bat` to your chosen directory
    - Add the installation directory to system PATH
 
-## 📖 Usage
+## Usage
 
 ### Method 1: Windows File Explorer (Recommended)
 
@@ -58,7 +58,7 @@ InitVenv ".\my-project"
 InitVenv ".."
 ```
 
-## 🔧 How It Works
+## How It Works
 
 The installer creates a simple batch file that launches the main executable:
 
@@ -75,7 +75,7 @@ When you run `InitVenv`, it:
 4. Installs packages from `requirements.txt` (if present)
 5. Keeps the terminal open for continued work
 
-## 📸 Screenshots
+## Screenshots
 
 | Scenario | Preview |
 | :------- | :------ |
@@ -85,30 +85,30 @@ When you run `InitVenv`, it:
 | Program execution with requirements file installation | <img width="1347" height="596" alt="Program running with automatic requirements file installation process" src="https://github.com/user-attachments/assets/f7e995e2-ff1c-4daf-bc73-9ee5a5430597" /> |
 | User terminal session maintained after setup | <img width="566" height="257" alt="User terminal session preserved and ready for continued interaction" src="https://github.com/user-attachments/assets/bc28f7fa-3024-4461-ad58-6462c871fdd6" /> |
 
-## ⚠️ Important Notes
+## Important Notes
 
 - The `requirements.txt` file must contain the dependencies **before** running InitVenv
 - The program will not understand requirements once the virtual environment is created
 - Currently supports Windows systems only
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
 See the [Release Notes](https://github.com/Dev2Forge/Init-Venv/releases) for detailed development history and changelog.
 
-## 📝 License
+## License
 
 This project is licensed under the GPL-3.0 License - see the [LICENSE](LICENSE) file for details.
 
-## 🔗 Links
+## Links
 
 - [Download from SourceForge](https://sourceforge.net/projects/initvenv/)
 - [GitHub Releases](https://github.com/Dev2Forge/Init-Venv/releases)
 - [Issues](https://github.com/Dev2Forge/Init-Venv/issues)
 - [Pull Requests](https://github.com/Dev2Forge/Init-Venv/pulls)
 
-## 👨‍💻 Contributors
+## Contributors
 
 <table>
   <tr>
