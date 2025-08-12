@@ -30,7 +30,7 @@
 
 ## Installation
 
-1. Download the latest release from [SourceForge](https://sourceforge.net/projects/initvenv/)
+1. Download the latest [release](https://github.com/Dev2Forge/Init-Venv/releases)
 2. Run the installer
 3. The installer will:
    - Copy `InitVenv-{architecture}.exe` and `InitVenv.bat` to your chosen directory
