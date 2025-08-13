@@ -103,7 +103,7 @@ This project is licensed under the GPL-3.0 License - see the [LICENSE](LICENSE) 
 
 ## Links
 
-- [Download from SourceForge](https://sourceforge.net/projects/initvenv/)
+- [Download from SourceForge](https://sourceforge.net/projects/init-venv/)
 - [GitHub Releases](https://github.com/Dev2Forge/Init-Venv/releases)
 - [Issues](https://github.com/Dev2Forge/Init-Venv/issues)
 - [Pull Requests](https://github.com/Dev2Forge/Init-Venv/pulls)
