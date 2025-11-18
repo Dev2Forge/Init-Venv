@@ -2,10 +2,7 @@
 
 ## Fix
 
-- [x] [¡Mejorar la validación de la ruta de Python!](#mejorar-la-validación-de-la-ruta-de-python)
-  - Realicé este punto, se requiere refactorizar (Redundancias)/funcional
-- [x] [¡Mejorar la validación de la ruta de Pip!](#mejorar-la-validación-de-la-ruta-de-pip)
-  - Realicé este punto, se requiere refactorizar (Redundancias)/funcional
+- [ ] [Modificar la estructura de ejecución](#modificar-la-estructura-de-ejecución)
 - [ ] [Si ya existe un entorno virtual en la ruta, obtenerlo (el nombre)](#si-ya-existe-un-entorno-virtual-en-la-ruta-obtenerlo-el-nombre)
 - [ ] [Mejorar el manejo de Errores/Excepciones](#mejorar-el-manejo-de-erroresexcepciones)
 - [ ] [Error en requirements.txt](#error-en-requirementstxt-añadido-después-de-crear-el-entorno-virtual)
@@ -23,13 +20,9 @@
 
 ## Fix
 
-### Mejorar la validación de la ruta de Python
+### Modificar la estructura de ejecución
 
-Solo se verifica si python existe en el sistema, pero no se toma en cuenta después de creado el entorno virtual, se debe volver a validar, pero ¡verificando que realmente hay un "python.exe" en el entorno virtual actual!
-
-### Mejorar la validación de la ruta de Pip
-
-De la misma forma que se debe hacer con la ruta de Python.
+Cuando el programa es llamado desde la terminal, este siempre abre una nueva terminal, la idea es que la terminal (nueva) solo se haga apertura cuando se llama desde la URL del file explorer, cuando es llamado desde una consola, se debe ejecutar todo dentro de la misma consola!
 
 ### Si ya existe un entorno virtual en la ruta, obtenerlo (el nombre)
 
