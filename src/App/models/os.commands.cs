@@ -8,7 +8,7 @@
  * File: \os.commands.cs
  * Created: Sunday, 20th July 2025 12:32:02 am
  * -----
- * Last Modified: Thursday, 20th November 2025 2:59:44 pm
+ * Last Modified: Thursday, 20th November 2025 3:16:45 pm
  * Modified By: tutosrive (tutosrive@Dev2Forge.software)
  * -----
  */
@@ -22,6 +22,7 @@ namespace InitVenv.src.App.models
     {
         public abstract string PipPaths { get; }
         public abstract string PythonPaths { get; }
+        public abstract string CreateVenv { get; }
         public abstract string ActivateVenv { get; }
         public abstract string RequirementsInstall { get; }
         public abstract string CheckRequirementsPip { get; }
