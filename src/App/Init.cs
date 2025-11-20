@@ -8,7 +8,7 @@
  * File: \Main.cs
  * Created: Sunday, 27th July 2025 2:17:28 pm
  * -----
- * Last Modified: Sunday, 3rd August 2025 7:31:46 pm
+ * Last Modified: Thursday, 20th November 2025 3:00:42 pm
  * Modified By: tutosrive (tutosrive@Dev2Forge.software)
  * -----
  */
@@ -26,7 +26,7 @@ namespace App
         public static async Task Run(string path)
         {
             string? os = OS.GetOS();
-
+            
             switch (os)
             {
                 case "Windows":

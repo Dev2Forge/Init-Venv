@@ -8,15 +8,10 @@
  * File: \Start.cs
  * Created: Sunday, 27th July 2025 8:31:25 pm
  * -----
- * Last Modified: Friday, 8th August 2025 11:04:16 pm
+ * Last Modified: Thursday, 20th November 2025 2:57:40 pm
  * Modified By: tutosrive (tutosrive@Dev2Forge.software)
  * -----
  */
-
-//  TODO: The command to activate the virtual environment
-// change for each name (.venv, venv, .env\, virtualenv, etc)
-// So, the name of virtual venv should be obtained to use it!
-// Can be in the "checkVenvExists" function...
 
 using InitVenv.src.App.os.windows.models;
 using InitVenv.src.App.utils;
@@ -27,25 +22,15 @@ namespace InitVenv.src.App.os.windows
     {
         public static async Task Run(string path)
         {
-            // --------- Get the absolute path (if is relative...) ---------
             path = Paths.AbsoluteUniversalPath(path);
-
-            // --------- Objects instances ---------
+            
             WindowsRunner runner = new(path);
             Validators validators = new(runner, path);
             Commands commands = new();
 
-            // --------- Check that path is OK ---------
             CheckPath(validators, path);
-
-            // --------- Try make the .venv folder ---------
             bool venvIsOld = await TryCreateVenv(validators, runner, commands, path);
-
-            // --------- Try install requirements.txt ---------
             await TryInstallRequirements(validators, runner, commands, path, venvIsOld);
-
-            // FIXME: This command is running on any case (even when python NOT EXISTS)
-            // --------- Try activate venv (in User Terminal and Kepp it!) ---------
             await TryActivateVenv(validators, runner, commands, path);
         }
 
@@ -59,16 +44,11 @@ namespace InitVenv.src.App.os.windows
 
         private static async Task<bool> TryCreateVenv(Validators v, WindowsRunner r, Commands c, string p)
         {
-            // Local variables
             bool venvExists = CheckVenvExists(p);
-
-            // --------- Validations python and existing venv ---------
             bool pythonIsOk = await v.CheckPythonPaths(venvExists);
 
-            // Create the new virtualvenv
             if (!venvExists && pythonIsOk)
             {
-                // TODO: Send Succefully message when completed (.ContinueWith)
                 await r.ExecuteCommandAsync("cmd.exe", c.CreateVenv);
             }
 
@@ -77,13 +57,11 @@ namespace InitVenv.src.App.os.windows
 
         private static async Task TryActivateVenv(Validators v, WindowsRunner r, Commands c, string p)
         {
-            // When a virtual venv exists
             bool pythonIsOk = await v.CheckPythonPaths(true);
             string _showVenvContentToUser = "echo ----Python Paths---- && where python && echo ----PIP Paths---- && where pip && echo ----Requirements list---- && pip list";
 
             if (pythonIsOk)
             {
-                // Try activate venv
                 await r.ExecuteCommandAsync("cmd.exe", $"{c.ActivateVenv} && {_showVenvContentToUser}", true, true, false);
             }
         }
@@ -95,18 +73,14 @@ namespace InitVenv.src.App.os.windows
             bool fileRequirementsExists = v.CheckRequirementsFile();
             bool requirementsIsInstall;
 
-            // Try install the requirements from file
             if (pipIsOk && fileRequirementsExists)
             {
-                // All requirements will be install
                 if (!isOldVenv)
                 {
-                    // TODO: Send Succefully message when completed (.ContinueWith)
                     await r.ExecuteCommandAsync("cmd.exe", completeCommand);
                 }
                 else
                 {
-                    // Check if missing any requirement and try fix (Re-Install)
                     requirementsIsInstall = await v.CheckRequirementsPip();
 
                     if (!requirementsIsInstall)
@@ -117,25 +91,20 @@ namespace InitVenv.src.App.os.windows
             }
         }
 
-        /// <summary>
-        /// Check if the user have a virtual venv
-        /// </summary>
-        /// <returns>A bool that indicate if the virtual venv exists</returns>
         private static bool CheckVenvExists(string p)
         {
             string[] venvNames = ["venv", ".venv", "env", ".env", "virtualenv", ".virtualenv", "python-env", ".python-env", "myenv", "project-env", "dev-env", ".dev-env", "local-env", ".local-env"];
             bool venvExist = false;
-
-            // Check if a virtual venv already exists
+            
+            // TODO: Upgrade from for to while! (Not use Break!)
             foreach (string name in venvNames)
             {
                 string absPath = Paths.AbsoluteUniversalPath($"{p}\\{name}\\Scripts\\python.exe");
-                // Any virtual venv contains it
                 venvExist = Files.Exists(absPath);
 
                 if (venvExist) break;
             }
-
+            
             return venvExist;
         }
     }

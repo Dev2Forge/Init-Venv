@@ -8,7 +8,7 @@
  * File: \Files.cs
  * Created: Friday, 18th July 2025 7:00:41 pm
  * -----
- * Last Modified: Tuesday, 29th July 2025 8:12:17 pm
+ * Last Modified: Thursday, 20th November 2025 3:00:14 pm
  * Modified By: tutosrive (tutosrive@Dev2Forge.software)
  * -----
  */
@@ -17,11 +17,6 @@ namespace InitVenv.src.App.utils
 {
     public static class Files
     {
-        /// <summary>
-        /// Check if any file exists in the OS
-        /// </summary>
-        /// <param name="arg">The file to check</param>
-        /// <returns>A bool that indicates if exists or not</returns>
         public static bool Exists(string arg)
         {
             string fullPath = Paths.AbsoluteUniversalPath(arg);

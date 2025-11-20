@@ -8,7 +8,7 @@
  * File: \OS.cs
  * Created: Friday, 18th July 2025 7:00:41 pm
  * -----
- * Last Modified: Sunday, 27th July 2025 8:34:44 pm
+ * Last Modified: Thursday, 20th November 2025 3:00:20 pm
  * Modified By: tutosrive (tutosrive@Dev2Forge.software)
  * -----
  */
@@ -17,10 +17,6 @@ namespace InitVenv.src.App.utils
 {
     public class OS
     {
-        /// <summary>
-        /// Get the Operating System "type" (e.g. Windows, Linux, MacOS)
-        /// </summary>
-        /// <returns>If the OS is supported (Windows, Linux, MacOS) return its name, else null</returns>
         public static string? GetOS()
         {
             string? os = null;

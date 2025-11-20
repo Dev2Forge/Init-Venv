@@ -8,7 +8,7 @@
  * File: \os.commands.cs
  * Created: Sunday, 20th July 2025 12:32:02 am
  * -----
- * Last Modified: Sunday, 3rd August 2025 8:58:04 pm
+ * Last Modified: Thursday, 20th November 2025 2:59:44 pm
  * Modified By: tutosrive (tutosrive@Dev2Forge.software)
  * -----
  */
@@ -20,29 +20,10 @@ namespace InitVenv.src.App.models
 {
     public abstract class IOsCommands()
     {
-        /// <summary>
-        /// On windows, command to show the "pip"
-        /// </summary>
         public abstract string PipPaths { get; }
-        /// <summary>
-        /// Find out the route of the "python"
-        /// </summary>
         public abstract string PythonPaths { get; }
-        /// <summary>
-        /// Command to create new "venv"
-        /// </summary>
-        public abstract string CreateVenv { get; }
-        /// <summary>
-        /// Is used to activate the venv (usally is ".\venv\Scripts\activate" on Windows)
-        /// </summary>
         public abstract string ActivateVenv { get; }
-        /// <summary>
-        /// Usually is "pip -r requirements.txt"
-        /// </summary>
         public abstract string RequirementsInstall { get; }
-        /// <summary>
-        /// Usually is "pip check"
-        /// </summary>
         public abstract string CheckRequirementsPip { get; }
         public override string ToString()
         {
@@ -59,11 +40,6 @@ namespace InitVenv.src.App.models
 
         public static T Create<T>() where T : IOsCommands, new() => new();
 
-        /// <summary>
-        /// Get the properties of this Object
-        /// </summary>
-        /// <returns>A string array that contains all object properties</returns>
-        /// <exception cref="Exception"></exception>
         public string[] Properties()
         {
             PropertyInfo[] props = typeof(IOsCommands).GetProperties();
