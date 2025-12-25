@@ -1,5 +1,5 @@
 /*
- * windows - Initialize a virtual environment automatically
+ * linux - Initialize a virtual environment automatically
  * Copyright 2025 - 2025 Dev2Forge
  * Licence: GPL-3
  * More information: https://github.com/Dev2Forge/Init-Venv/blob/main/LICENSE
@@ -8,25 +8,25 @@
  * File: \Start.cs
  * Created: Sunday, 27th July 2025 8:31:25 pm
  * -----
- * Last Modified: Wednesday, 24th December 2025 10:18:21 pm
+ * Last Modified: Wednesday, 24th December 2025 10:18:31 pm
  * Modified By: tutosrive (tutosrive@Dev2Forge.software)
  * -----
  */
 
-using InitVenv.src.App.os.windows.models;
+using InitVenv.src.App.os.linux.models;
 using InitVenv.src.App.utils;
 
-namespace InitVenv.src.App.os.windows
+namespace InitVenv.src.App.os.linux
 {
-    public class WindowsInit
+    public class LinuxInit
     {
         public static async Task Run(string path)
         {
             path = Paths.AbsoluteUniversalPath(path);
             
-            WindowsRunner runner = new(path);
+            LinuxRunner runner = new(path);
             Validators validators = new(runner, path);
-            CommandsWindows commands = new();
+            CommandsLinux commands = new();
 
             CheckPath(validators, path);
             bool venvIsOld = await TryCreateVenv(validators, runner, commands, path);
@@ -42,7 +42,7 @@ namespace InitVenv.src.App.os.windows
             }
         }
 
-        private static async Task<bool> TryCreateVenv(Validators v, WindowsRunner r, CommandsWindows c, string p)
+        private static async Task<bool> TryCreateVenv(Validators v, LinuxRunner r, CommandsLinux c, string p)
         {
             bool venvExists = CheckVenvExists(p);
             bool pythonIsOk = await v.CheckPythonPaths(venvExists);
@@ -55,10 +55,10 @@ namespace InitVenv.src.App.os.windows
             return venvExists;
         }
 
-        private static async Task TryActivateVenv(Validators v, WindowsRunner r, CommandsWindows c, string p)
+        private static async Task TryActivateVenv(Validators v, LinuxRunner r, CommandsLinux c, string p)
         {
             bool pythonIsOk = await v.CheckPythonPaths(true);
-            string _showVenvContentToUser = "echo ----Python Paths---- && where python && echo ----PIP Paths---- && where pip && echo ----Requirements list---- && pip list";
+            string _showVenvContentToUser = "echo ----Python Paths---- && which python && echo ---- PIP Paths ---- && which pip3 && echo ----Requirements list---- && pip3 list";
 
             if (pythonIsOk)
             {
@@ -66,7 +66,7 @@ namespace InitVenv.src.App.os.windows
             }
         }
 
-        private static async Task TryInstallRequirements(Validators v, WindowsRunner r, CommandsWindows c, string p, bool isOldVenv)
+        private static async Task TryInstallRequirements(Validators v, LinuxRunner r, CommandsLinux c, string p, bool isOldVenv)
         {
             string completeCommand = $"cd /d {p} && {c.ActivateVenv} && {c.RequirementsInstall}";
             bool pipIsOk = await v.CheckPipPaths();

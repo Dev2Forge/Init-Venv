@@ -8,7 +8,7 @@
  * File: \Main.cs
  * Created: Sunday, 27th July 2025 2:17:28 pm
  * -----
- * Last Modified: Thursday, 20th November 2025 3:00:42 pm
+ * Last Modified: Wednesday, 24th December 2025 10:31:44 pm
  * Modified By: tutosrive (tutosrive@Dev2Forge.software)
  * -----
  */
@@ -17,6 +17,7 @@ using InitVenv.src.App.utils;
 using InitVenv.src.App.os;
 using InitVenv.src.App.os.windows;
 using System.Threading.Tasks;
+using InitVenv.src.App.os.linux;
 
 namespace App
 {
@@ -34,7 +35,9 @@ namespace App
                     break;
                 case "MacOS":
                 case "Linux":
-                    Console.WriteLine("The system is not allowed right now...");
+                    Console.WriteLine(OS.GetOSInformation());
+                    // await LinuxInit.Run(path);
+                    // Console.WriteLine("The system is not allowed right now...");
                     break;
                 default:
                     throw new Exception("The Operating System isn't allowed!");
