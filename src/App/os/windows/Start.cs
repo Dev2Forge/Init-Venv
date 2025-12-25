@@ -8,7 +8,7 @@
  * File: \Start.cs
  * Created: Sunday, 27th July 2025 8:31:25 pm
  * -----
- * Last Modified: Thursday, 20th November 2025 2:57:40 pm
+ * Last Modified: Wednesday, 24th December 2025 9:55:17 pm
  * Modified By: tutosrive (tutosrive@Dev2Forge.software)
  * -----
  */
@@ -26,7 +26,7 @@ namespace InitVenv.src.App.os.windows
             
             WindowsRunner runner = new(path);
             Validators validators = new(runner, path);
-            Commands commands = new();
+            CommandsWindows commands = new();
 
             CheckPath(validators, path);
             bool venvIsOld = await TryCreateVenv(validators, runner, commands, path);
@@ -42,7 +42,7 @@ namespace InitVenv.src.App.os.windows
             }
         }
 
-        private static async Task<bool> TryCreateVenv(Validators v, WindowsRunner r, Commands c, string p)
+        private static async Task<bool> TryCreateVenv(Validators v, WindowsRunner r, CommandsWindows c, string p)
         {
             bool venvExists = CheckVenvExists(p);
             bool pythonIsOk = await v.CheckPythonPaths(venvExists);
@@ -55,7 +55,7 @@ namespace InitVenv.src.App.os.windows
             return venvExists;
         }
 
-        private static async Task TryActivateVenv(Validators v, WindowsRunner r, Commands c, string p)
+        private static async Task TryActivateVenv(Validators v, WindowsRunner r, CommandsWindows c, string p)
         {
             bool pythonIsOk = await v.CheckPythonPaths(true);
             string _showVenvContentToUser = "echo ----Python Paths---- && where python && echo ----PIP Paths---- && where pip && echo ----Requirements list---- && pip list";
@@ -66,7 +66,7 @@ namespace InitVenv.src.App.os.windows
             }
         }
 
-        private static async Task TryInstallRequirements(Validators v, WindowsRunner r, Commands c, string p, bool isOldVenv)
+        private static async Task TryInstallRequirements(Validators v, WindowsRunner r, CommandsWindows c, string p, bool isOldVenv)
         {
             string completeCommand = $"cd /d {p} && {c.ActivateVenv} && {c.RequirementsInstall}";
             bool pipIsOk = await v.CheckPipPaths();

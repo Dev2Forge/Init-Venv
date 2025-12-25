@@ -8,14 +8,14 @@
  * File: \WindowsCommandsResult.cs
  * Created: Sunday, 27th July 2025 8:42:24 pm
  * -----
- * Last Modified: Monday, 28th July 2025 3:12:01 pm
+ * Last Modified: Wednesday, 24th December 2025 9:52:11 pm
  * Modified By: tutosrive (tutosrive@Dev2Forge.software)
  * -----
  */
 
 using System.Collections;
 
-namespace InitVenv.src.App.os.windows.models
+namespace InitVenv.src.App.models
 {
     public class CommandResult
     {

@@ -8,7 +8,7 @@
  * File: \Validations.cs
  * Created: Monday, 28th July 2025 3:15:01 pm
  * -----
- * Last Modified: Thursday, 20th November 2025 2:53:41 pm
+ * Last Modified: Wednesday, 24th December 2025 9:55:17 pm
  * Modified By: tutosrive (tutosrive@Dev2Forge.software)
  * -----
  */
@@ -21,7 +21,7 @@ namespace InitVenv.src.App.os.windows
 {
     class Validators(WindowsRunner runner, string path) : IOsValidators
     {
-        private readonly Commands _commands = new();
+        private readonly CommandsWindows _commands = new();
         private readonly WindowsRunner _Runner = runner;
         private readonly string workingDir = path;
 

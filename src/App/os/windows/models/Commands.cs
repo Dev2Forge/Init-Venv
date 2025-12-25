@@ -8,7 +8,7 @@
  * File: \windows.commands.cs
  * Created: Friday, 18th July 2025 11:51:38 pm
  * -----
- * Last Modified: Sunday, 3rd August 2025 8:58:56 pm
+ * Last Modified: Wednesday, 24th December 2025 9:55:17 pm
  * Modified By: tutosrive (tutosrive@Dev2Forge.software)
  * -----
  */
@@ -17,7 +17,7 @@ using InitVenv.src.App.models;
 
 namespace InitVenv.src.App.os.windows.models
 {
-    public class Commands : IOsCommands
+    public class CommandsWindows : IOsCommands
     {
         public override string PipPaths => "where pip";
         public override string PythonPaths { get => "where python"; }
