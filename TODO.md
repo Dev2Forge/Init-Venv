@@ -61,3 +61,53 @@ Un mejor mensaje sería:
 ```shell
 Make sure you have Python installed on your system (Also have it in your PATH)
 ```
+
+
+---
+
+## Fix Linux Attempt
+
+```bash
+srm@debian-srm:/mnt/SRM/GITHUB/ORGs/Dev2Forge/repos/Init-Venv$ dotnet run /mnt/SRM/GITHUB/ORGs/Dev2Forge/tests/Init-Venv-Tests
+---------
+Init-Venv (C) 2025 - Dev2Forge
+All Rights Reserved.
+---------
+
+[ INFO ] Try executing command: "cd /d /mnt/SRM/GITHUB/ORGs/Dev2Forge/tests/Init-Venv-Tests && which python3"
+[ ERROR] QLayout: Cannot add a null widget to QHBoxLayout/
+
+[ ERROR] QThreadStorage: Thread 0x558ca3ad4700 exited after QThreadStorage 9 destroyed
+[ WARN ] Completed with errors (Exit Code: 0)
+Errores: QLayout: Cannot add a null widget to QHBoxLayout/
+QThreadStorage: Thread 0x558ca3ad4700 exited after QThreadStorage 9 destroyed
+
+[ INFO ] Try executing command: "python3 -m venv .venv"
+[ ERROR] konsole: Opción desconocida «m».
+[ ERROR] QThreadStorage: Thread 0x56099d89f700 exited after QThreadStorage 9 destroyed
+[ ERROR] QThreadStorage: Thread 0x56099d89f700 exited after QThreadStorage 5 destroyed
+[ ERROR] QThreadStorage: Thread 0x56099d89f700 exited after QThreadStorage 4 destroyed
+[ WARN ] Completed with errors (Exit Code: 1)
+Errores: konsole: Opción desconocida «m».
+QThreadStorage: Thread 0x56099d89f700 exited after QThreadStorage 9 destroyed
+QThreadStorage: Thread 0x56099d89f700 exited after QThreadStorage 5 destroyed
+QThreadStorage: Thread 0x56099d89f700 exited after QThreadStorage 4 destroyed
+
+[ INFO ] Try executing command: "which pip3"
+[ ERROR] QLayout: Cannot add a null widget to QHBoxLayout/
+[ ERROR] QThreadStorage: Thread 0x56213d97a700 exited after QThreadStorage 9 destroyed
+[ WARN ] Completed with errors (Exit Code: 0)
+Errores: QLayout: Cannot add a null widget to QHBoxLayout/
+QThreadStorage: Thread 0x56213d97a700 exited after QThreadStorage 9 destroyed
+
+[ INFO ] Try executing command: "cd /d /mnt/SRM/GITHUB/ORGs/Dev2Forge/tests/Init-Venv-Tests && source .venv/in/activate && which python3"
+[ ERROR] QLayout: Cannot add a null widget to QHBoxLayout/
+[ ERROR] QThreadStorage: Thread 0x55de44df8700 exited after QThreadStorage 9 destroyed
+[ WARN ] Completed with errors (Exit Code: 0)
+Errores: QLayout: Cannot add a null widget to QHBoxLayout/
+QThreadStorage: Thread 0x55de44df8700 exited after QThreadStorage 9 destroyed
+
+Program exit Sucessfully!
+Press ENTER to close...
+
+```

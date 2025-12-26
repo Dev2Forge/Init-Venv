@@ -8,26 +8,22 @@
  * File: \Runner.cs
  * Created: Monday, 28th July 2025 2:36:53 pm
  * -----
- * Last Modified: Sunday, 3rd August 2025 8:35:35 pm
+ * Last Modified: Wednesday, 24th December 2025 9:53:41 pm
  * Modified By: tutosrive (tutosrive@Dev2Forge.software)
  * -----
  */
 
 using System.Diagnostics;
 using System.Text;
-using InitVenv.src.App.os.windows.models;
+using InitVenv.src.App.models;
 
 namespace InitVenv.src.App.os.windows
 {
-    /// <summary>
-    /// Contains methods to run commands and others
-    /// </summary>
     class WindowsRunner(string path)
     {
         private readonly string workingDir = path;
         public async Task<CommandResult> ExecuteCommandAsync(string filename, string command, bool keep = false, bool userShell = false, bool wait = true)
         {
-            // Keep the console while command is completed
             string ConsoleKeep = keep ? "/k" : "/c";
 
             Console.WriteLine($"[ INFO ] Try executing command: \"{command}\"");
@@ -40,18 +36,15 @@ namespace InitVenv.src.App.os.windows
                 process.StartInfo.FileName = filename;
                 process.StartInfo.Arguments = $"{ConsoleKeep} {command}";
 
-                // Variables to catch the output
                 var outputBuilder = new StringBuilder();
                 var errorBuilder = new StringBuilder();
-
-                // Configure streams directions ONLY if userShell = false
+                
                 if (!userShell)
                 {
                     process.StartInfo.RedirectStandardOutput = true;
                     process.StartInfo.RedirectStandardError = true;
                     process.StartInfo.CreateNoWindow = true;
 
-                    // Event handlers for asyncronus catch
                     process.OutputDataReceived += (sender, e) =>
                     {
                         if (!string.IsNullOrEmpty(e.Data))
@@ -71,12 +64,10 @@ namespace InitVenv.src.App.os.windows
                     };
                 }
 
-                // Start Process
                 process.Start();
 
                 if (!userShell)
                 {
-                    // Start async read
                     process.BeginOutputReadLine();
                     process.BeginErrorReadLine();
                 }
@@ -85,7 +76,6 @@ namespace InitVenv.src.App.os.windows
                 if (wait)
                 {
                     await process.WaitForExitAsync();
-                    // CAMBIO CRÍTICO: Verificar que el proceso no haya terminado antes de acceder a ExitCode
                     exitCode = process.HasExited ? process.ExitCode : 0;
                 }
                 else
@@ -93,13 +83,11 @@ namespace InitVenv.src.App.os.windows
                     process.Close();
                 }
 
-                // Format exit values
                 string output = outputBuilder.ToString();
                 string error = errorBuilder.ToString();
 
-                // Check if have errors - CAMBIO: Para userShell, no podemos verificar errores de la misma forma
                 bool hasErrors = userShell ? false : (exitCode != 0 || !string.IsNullOrEmpty(error));
-
+                
                 if (userShell)
                 {
                     Console.WriteLine("[ INFO ] Command executed with shell (output not captured)");

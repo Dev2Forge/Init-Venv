@@ -36,6 +36,16 @@
     <AssemblyName>InitVenv-ARM64</AssemblyName>
   </PropertyGroup>
 
+  <!-- Linux x64 (covers Debian, Fedora, Arch Linux) -->
+  <PropertyGroup Condition="'$(RuntimeIdentifier)' == 'linux-x64'">
+    <AssemblyName>InitVenv-linux-x64</AssemblyName>
+  </PropertyGroup>
+
+  <!-- Linux ARM64 -->
+  <PropertyGroup Condition="'$(RuntimeIdentifier)' == 'linux-arm64'">
+    <AssemblyName>InitVenv-linux-arm64</AssemblyName>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Include="icon.ico" />
   </ItemGroup>

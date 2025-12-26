@@ -8,7 +8,7 @@
  * File: \OS.cs
  * Created: Friday, 18th July 2025 7:00:41 pm
  * -----
- * Last Modified: Sunday, 27th July 2025 8:34:44 pm
+ * Last Modified: Thursday, 25th December 2025 9:44:27 pm
  * Modified By: tutosrive (tutosrive@Dev2Forge.software)
  * -----
  */
@@ -17,10 +17,6 @@ namespace InitVenv.src.App.utils
 {
     public class OS
     {
-        /// <summary>
-        /// Get the Operating System "type" (e.g. Windows, Linux, MacOS)
-        /// </summary>
-        /// <returns>If the OS is supported (Windows, Linux, MacOS) return its name, else null</returns>
         public static string? GetOS()
         {
             string? os = null;
@@ -30,6 +26,21 @@ namespace InitVenv.src.App.utils
             if (OperatingSystem.IsMacOS()) os = "MacOS";
 
             return os;
+        }
+
+        public static string GetOSTypeID()
+        {
+            Dictionary<string, string> fileData = Files.ParseOSReleaseToDictionary();
+            string osTypeID = $"{fileData!.GetValueOrDefault("ID", null)}";
+            
+            return osTypeID;
+        }
+
+        public static string GetCurrentDesktopEnvironment()
+        {
+            string desktopEnvironment = Environment.GetEnvironmentVariable("XDG_CURRENT_DESKTOP") ?? throw new Exception("Don't exists the 'XDG_CURRENT_DESKTOP' environment variable");
+
+            return desktopEnvironment.ToLower();
         }
     }
 }

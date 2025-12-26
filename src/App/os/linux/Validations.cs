@@ -1,5 +1,5 @@
 /*
- * windows - Initialize a virtual environment automatically
+ * linux - Initialize a virtual environment automatically
  * Copyright 2025 - 2025 Dev2Forge
  * Licence: GPL-3
  * More information: https://github.com/Dev2Forge/Init-Venv/blob/main/LICENSE
@@ -8,27 +8,27 @@
  * File: \Validations.cs
  * Created: Monday, 28th July 2025 3:15:01 pm
  * -----
- * Last Modified: Wednesday, 24th December 2025 10:03:16 pm
+ * Last Modified: Friday, 26th December 2025 2:31:01 pm
  * Modified By: tutosrive (tutosrive@Dev2Forge.software)
  * -----
  */
 
 using InitVenv.src.App.models;
-using InitVenv.src.App.os.windows.models;
+using InitVenv.src.App.os.linux.models;
 using InitVenv.src.App.utils;
 
-namespace InitVenv.src.App.os.windows
+namespace InitVenv.src.App.os.linux
 {
-    class Validators(WindowsRunner runner, string path) : IOsValidators
+    class Validators(LinuxRunner runner, string path, string venvName) : IOsValidators
     {
-        private readonly CommandsWindows _commands = new();
-        private readonly WindowsRunner _Runner = runner;
+        private readonly CommandsLinux _commands = new(venvName);
+        private readonly LinuxRunner _Runner = runner;
         private readonly string workingDir = path;
-
+        private readonly string venvName = venvName;
         public async Task<bool> CheckPipPaths()
         {
             bool ok = false;
-            CommandResult commandResult = await this._Runner.ExecuteCommandAsync("cmd.exe", this._commands.PipPaths);
+            CommandResult commandResult = await this._Runner.ExecuteCommandAsync(this._commands.PipPaths);
 
             if (commandResult.ExitCode == 0) { ok = true; }
 
@@ -42,12 +42,12 @@ namespace InitVenv.src.App.os.windows
 
             if (existVenv)
             {
-                commandResult = await this._Runner.ExecuteCommandAsync("cmd.exe", $"cd /d {this.workingDir} && {this._commands.ActivateVenv} && {this._commands.PythonPaths}");
-                if (commandResult.Output.Contains(".venv\\Scripts\\python.exe")) { ok = true; }
+                commandResult = await this._Runner.ExecuteCommandAsync($"cd {this.workingDir} && {this._commands.ActivateVenv} && {this._commands.PythonPaths}");
+                if (commandResult.Output.Contains($"{this.venvName}/bin/python3")) { ok = true; }
             }
             else
             {
-                commandResult = await this._Runner.ExecuteCommandAsync("cmd.exe", $"cd /d {this.workingDir} && {this._commands.PythonPaths}");
+                commandResult = await this._Runner.ExecuteCommandAsync($"cd {this.workingDir} && {this._commands.PythonPaths}");
                 if (commandResult.ExitCode == 0) { ok = true; }
             }
             return ok;
@@ -56,7 +56,7 @@ namespace InitVenv.src.App.os.windows
         public async Task<bool> CheckRequirementsPip()
         {
             bool ok = false;
-            CommandResult commandResult = await this._Runner.ExecuteCommandAsync("cmd.exe", $"cd /d {this.workingDir} && {this._commands.ActivateVenv} && {this._commands.CheckRequirementsPip}");
+            CommandResult commandResult = await this._Runner.ExecuteCommandAsync($"cd {this.workingDir} && {this._commands.ActivateVenv} && {this._commands.CheckRequirementsPip}");
 
             if (commandResult.ExitCode == 0) { ok = true; }
             return ok;
@@ -64,7 +64,7 @@ namespace InitVenv.src.App.os.windows
 
         public bool CheckRequirementsFile()
         {
-            bool ok = Files.Exists($"{this.workingDir}\\requirements.txt");
+            bool ok = Files.Exists($"{this.workingDir}/requirements.txt");
             return ok;
         }
 

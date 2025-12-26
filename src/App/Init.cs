@@ -8,7 +8,7 @@
  * File: \Main.cs
  * Created: Sunday, 27th July 2025 2:17:28 pm
  * -----
- * Last Modified: Sunday, 3rd August 2025 7:31:46 pm
+ * Last Modified: Friday, 26th December 2025 2:23:00 pm
  * Modified By: tutosrive (tutosrive@Dev2Forge.software)
  * -----
  */
@@ -17,6 +17,7 @@ using InitVenv.src.App.utils;
 using InitVenv.src.App.os;
 using InitVenv.src.App.os.windows;
 using System.Threading.Tasks;
+using InitVenv.src.App.os.linux;
 
 namespace App
 {
@@ -26,15 +27,17 @@ namespace App
         public static async Task Run(string path)
         {
             string? os = OS.GetOS();
-
+            
             switch (os)
             {
                 case "Windows":
                     await WindowsInit.Run(path);
                     break;
                 case "MacOS":
-                case "Linux":
                     Console.WriteLine("The system is not allowed right now...");
+                    break;
+                case "Linux":
+                    await LinuxInit.Run(path);
                     break;
                 default:
                     throw new Exception("The Operating System isn't allowed!");
