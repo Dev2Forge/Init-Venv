@@ -8,7 +8,7 @@
  * File: \Start.cs
  * Created: Sunday, 27th July 2025 8:31:25 pm
  * -----
- * Last Modified: Friday, 26th December 2025 2:21:38 pm
+ * Last Modified: Friday, 26th December 2025 2:36:11 pm
  * Modified By: tutosrive (tutosrive@Dev2Forge.software)
  * -----
  */
@@ -25,13 +25,14 @@ namespace InitVenv.src.App.os.linux
             path = Paths.AbsoluteUniversalPath(path);
             
             LinuxRunner runner = new(path);
-            Validators validators = new(runner, path);
-            CommandsLinux commands = new();
+            string venvName = runner.FindActualVenvName(path) ?? ".venv";
+            Validators validators = new(runner, path, venvName);
+            CommandsLinux commands = new(venvName);
 
             CheckPath(validators, path);
             bool venvIsOld = await TryCreateVenv(validators, runner, commands, path);
             await TryInstallRequirements(validators, runner, commands, path, venvIsOld);
-            await TryActivateVenv(validators, runner, commands, path);
+            await TryActivateVenv(validators, runner, commands, path, venvName);
         }
 
         private static void CheckPath(Validators v, string p)
@@ -44,7 +45,7 @@ namespace InitVenv.src.App.os.linux
 
         private static async Task<bool> TryCreateVenv(Validators v, LinuxRunner r, CommandsLinux c, string p)
         {
-            bool venvExists = CheckVenvExists(p);
+            bool venvExists = CheckVenvExists(p, r);
             bool pythonIsOk = await v.CheckPythonPaths(venvExists);
 
             if (!venvExists && pythonIsOk)
@@ -55,7 +56,7 @@ namespace InitVenv.src.App.os.linux
             return venvExists;
         }
 
-        private static async Task TryActivateVenv(Validators v, LinuxRunner r, CommandsLinux c, string p)
+        private static async Task TryActivateVenv(Validators v, LinuxRunner r, CommandsLinux c, string p, string venvName)
         {
             bool pythonIsOk = await v.CheckPythonPaths(true);
             string _showVenvContentToUser = "echo -e '\\n---- Python Paths ----\\n' && which python3 && echo -e '\\n---- PIP Paths ----\\n' && which pip3 && echo -e '\\n---- Requirements list ----\\n' && pip3 list && echo -e '----------------------\\n\\n'";
@@ -63,9 +64,6 @@ namespace InitVenv.src.App.os.linux
             if (pythonIsOk)
             {
                 await r.ExecuteCommandAsync($"{c.ActivateVenv} && {_showVenvContentToUser}", keep: false);
-                
-                string? venvName = r.FindActualVenvName(p);
-                venvName ??= ".venv";
                 
                 Console.WriteLine($"[ INFO ] Launching interactive shell with virtual environment: {venvName}");
                 Console.WriteLine($"[ INFO ] Directory: {p}");
@@ -103,18 +101,13 @@ namespace InitVenv.src.App.os.linux
             }
         }
 
-        private static bool CheckVenvExists(string p)
+        private static bool CheckVenvExists(string p, LinuxRunner runner)
         {
-            string[] venvNames = ["venv", ".venv", "env", ".env", "virtualenv", ".virtualenv", "python-env", ".python-env", "myenv", "project-env", "dev-env", ".dev-env", "local-env", ".local-env"];
             bool venvExist = false;
-            
-            // TODO: Upgrade from for to while! (Not use Break!)
-            foreach (string name in venvNames)
-            {
-                string absPath = Paths.AbsoluteUniversalPath($"{p}\\{name}\\bin\\python");
-                venvExist = Files.Exists(absPath);
 
-                if (venvExist) break;
+            if (runner.FindActualVenvName(p) != null)
+            {
+                venvExist = true;
             }
             
             return venvExist;

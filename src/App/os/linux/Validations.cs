@@ -8,7 +8,7 @@
  * File: \Validations.cs
  * Created: Monday, 28th July 2025 3:15:01 pm
  * -----
- * Last Modified: Friday, 26th December 2025 2:21:24 pm
+ * Last Modified: Friday, 26th December 2025 2:31:01 pm
  * Modified By: tutosrive (tutosrive@Dev2Forge.software)
  * -----
  */
@@ -19,12 +19,12 @@ using InitVenv.src.App.utils;
 
 namespace InitVenv.src.App.os.linux
 {
-    class Validators(LinuxRunner runner, string path) : IOsValidators
+    class Validators(LinuxRunner runner, string path, string venvName) : IOsValidators
     {
-        private readonly CommandsLinux _commands = new();
+        private readonly CommandsLinux _commands = new(venvName);
         private readonly LinuxRunner _Runner = runner;
         private readonly string workingDir = path;
-
+        private readonly string venvName = venvName;
         public async Task<bool> CheckPipPaths()
         {
             bool ok = false;
@@ -43,7 +43,7 @@ namespace InitVenv.src.App.os.linux
             if (existVenv)
             {
                 commandResult = await this._Runner.ExecuteCommandAsync($"cd {this.workingDir} && {this._commands.ActivateVenv} && {this._commands.PythonPaths}");
-                if (commandResult.Output.Contains(".venv/bin/python3")) { ok = true; }
+                if (commandResult.Output.Contains($"{this.venvName}/bin/python3")) { ok = true; }
             }
             else
             {
