@@ -8,7 +8,7 @@
  * File: /Commands.cs
  * Created: Wednesday, 31st December 1969 7:00:00 pm
  * -----
- * Last Modified: Wednesday, 24th December 2025 9:49:05 pm
+ * Last Modified: Friday, 26th December 2025 2:16:12 pm
  * Modified By: tutosrive (tutosrive@Dev2Forge.software)
  * -----
  */
@@ -24,7 +24,7 @@ namespace InitVenv.src.App.os.linux.models
         public override string PythonPaths { get => "which python3"; }
         public override string CreateVenv { get => "python3 -m venv .venv"; }
         // TODO: Accept others environments names ...
-        public override string ActivateVenv { get => "source .venv/in/activate"; }
+        public override string ActivateVenv { get => "source .venv/bin/activate"; }
         public override string RequirementsInstall { get => "pip3 install -r requirements.txt"; }
         public override string CheckRequirementsPip { get => "pip3 check"; }
 

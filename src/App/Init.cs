@@ -8,7 +8,7 @@
  * File: \Main.cs
  * Created: Sunday, 27th July 2025 2:17:28 pm
  * -----
- * Last Modified: Thursday, 25th December 2025 9:46:35 pm
+ * Last Modified: Friday, 26th December 2025 2:23:00 pm
  * Modified By: tutosrive (tutosrive@Dev2Forge.software)
  * -----
  */
@@ -37,7 +37,7 @@ namespace App
                     Console.WriteLine("The system is not allowed right now...");
                     break;
                 case "Linux":
-                    await LinuxInit.Run(path, OS.GetCurrentDesktopEnvironment());
+                    await LinuxInit.Run(path);
                     break;
                 default:
                     throw new Exception("The Operating System isn't allowed!");

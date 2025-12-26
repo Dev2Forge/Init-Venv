@@ -8,7 +8,7 @@
  * File: \Start.cs
  * Created: Sunday, 27th July 2025 8:31:25 pm
  * -----
- * Last Modified: Thursday, 25th December 2025 9:53:06 pm
+ * Last Modified: Friday, 26th December 2025 2:21:38 pm
  * Modified By: tutosrive (tutosrive@Dev2Forge.software)
  * -----
  */
@@ -20,14 +20,12 @@ namespace InitVenv.src.App.os.linux
 {
     public class LinuxInit
     {
-        private static string TERMINALNAME = "";
-        public static async Task Run(string path, string linuxDistroID)
+        public static async Task Run(string path)
         {
-            SetTerminalNameByDISTRO(linuxDistroID); 
             path = Paths.AbsoluteUniversalPath(path);
             
             LinuxRunner runner = new(path);
-            Validators validators = new(runner, path, TERMINALNAME);
+            Validators validators = new(runner, path);
             CommandsLinux commands = new();
 
             CheckPath(validators, path);
@@ -51,7 +49,7 @@ namespace InitVenv.src.App.os.linux
 
             if (!venvExists && pythonIsOk)
             {
-                await r.ExecuteCommandAsync(TERMINALNAME, c.CreateVenv);
+                await r.ExecuteCommandAsync(c.CreateVenv, keep: true);
             }
 
             return venvExists;
@@ -60,17 +58,29 @@ namespace InitVenv.src.App.os.linux
         private static async Task TryActivateVenv(Validators v, LinuxRunner r, CommandsLinux c, string p)
         {
             bool pythonIsOk = await v.CheckPythonPaths(true);
-            string _showVenvContentToUser = "echo ----Python Paths---- && which python3 && echo ---- PIP Paths ---- && which pip3 && echo ----Requirements list---- && pip3 list";
+            string _showVenvContentToUser = "echo -e '\\n---- Python Paths ----\\n' && which python3 && echo -e '\\n---- PIP Paths ----\\n' && which pip3 && echo -e '\\n---- Requirements list ----\\n' && pip3 list && echo -e '----------------------\\n\\n'";
 
             if (pythonIsOk)
             {
-                await r.ExecuteCommandAsync(TERMINALNAME, $"{c.ActivateVenv} && {_showVenvContentToUser}", true, true, false);
+                await r.ExecuteCommandAsync($"{c.ActivateVenv} && {_showVenvContentToUser}", keep: false);
+                
+                string? venvName = r.FindActualVenvName(p);
+                venvName ??= ".venv";
+                
+                Console.WriteLine($"[ INFO ] Launching interactive shell with virtual environment: {venvName}");
+                Console.WriteLine($"[ INFO ] Directory: {p}");
+                
+                Environment.SetEnvironmentVariable("INIT_VENV_PATH", p);
+                Environment.SetEnvironmentVariable("INIT_VENV_NAME", venvName);
+                Environment.SetEnvironmentVariable("VIRTUAL_ENV_DISABLE_PROMPT", "0");
+                
+                await r.ExecuteCommandAsync("echo 'Interactive shell with venv'", keep: true);
             }
         }
 
         private static async Task TryInstallRequirements(Validators v, LinuxRunner r, CommandsLinux c, string p, bool isOldVenv)
         {
-            string completeCommand = $"cd /d {p} && {c.ActivateVenv} && {c.RequirementsInstall}";
+            string completeCommand = $"cd {p} && {c.ActivateVenv} && {c.RequirementsInstall}";
             bool pipIsOk = await v.CheckPipPaths();
             bool fileRequirementsExists = v.CheckRequirementsFile();
             bool requirementsIsInstall;
@@ -79,7 +89,7 @@ namespace InitVenv.src.App.os.linux
             {
                 if (!isOldVenv)
                 {
-                    await r.ExecuteCommandAsync(TERMINALNAME, completeCommand);
+                    await r.ExecuteCommandAsync(completeCommand, keep: true);
                 }
                 else
                 {
@@ -87,7 +97,7 @@ namespace InitVenv.src.App.os.linux
 
                     if (!requirementsIsInstall)
                     {
-                        await r.ExecuteCommandAsync(TERMINALNAME, completeCommand);
+                        await r.ExecuteCommandAsync(completeCommand, keep: true);
                     }
                 }
             }
@@ -108,18 +118,6 @@ namespace InitVenv.src.App.os.linux
             }
             
             return venvExist;
-        }
-
-        private static void SetTerminalNameByDISTRO(string distro)
-        {
-            Dictionary<string, string> terminals = new()
-            {
-                ["gnome"] = "gnome-terminal", // DEBUGME
-                ["kde"] = "konsole",
-                ["xfce"] = "xfce4-terminal", // DEBUGME
-                ["cinnamon"] = "mate-terminal" // DEBUGME
-            };
-            TERMINALNAME = terminals!.GetValueOrDefault(distro, null) ?? throw new Exception("Your system does not have a valid ID or the terminal does not exist.");
         }
     }
 }

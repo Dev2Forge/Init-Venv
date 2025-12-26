@@ -8,12 +8,13 @@
  * File: \Program.cs
  * Created: Friday, 18th July 2025 7:00:41 pm
  * -----
- * Last Modified: Sunday, 3rd August 2025 6:56:53 pm
+ * Last Modified: Friday, 26th December 2025 2:13:40 pm
  * Modified By: tutosrive (tutosrive@Dev2Forge.software)
  * -----
  */
 
 using App;
+using InitVenv.src.App.utils;
 
 namespace InitVenv
 {
@@ -35,21 +36,34 @@ namespace InitVenv
                     throw new ArgumentException("The path to the directory is not valid or incorrect.");
                 }
 
-                await Init.Run(args[0]).ContinueWith(FinishProgram);
+                await Init.Run(args[0]).ContinueWith(t => WaitCloseOnlyWindows(t: t));
             }
             catch (Exception e)
             {
-                Console.Write($"[ERROR]  {e.Message}\n\nPlease, try execute again...\nPress ENTER to close...");
-                Console.Read();
+                WaitCloseOnlyWindows(msg: $"[ERROR]  {e.Message}\n\nPlease, try execute again...");
             }
 
         }
 
-        private static void FinishProgram(Task t)
+        private static void FinishProgram(Task? t, string? msg)
         {
-            string msg = t.IsCompleted ? "Program exit Sucessfully!" : "Program exit with Errors";
-            Console.Write($"{msg}\nPress ENTER to close...");
-            Console.Read();
+            string message = msg ?? "";
+            
+            if (msg == null && t != null)
+            {
+                message = t.IsCompleted ? "Program exit Sucessfully!" : "Program exit with Errors";
+            }
+
+            Console.Write($"{message}\nPress ENTER to close...");
+            Console.Read();   
+        }
+
+        private static void WaitCloseOnlyWindows(Task? t = null, string? msg = null)
+        {
+            if(OS.GetOS() == "windows")
+            {
+                FinishProgram(t, msg);
+            }
         }
     }
 }
