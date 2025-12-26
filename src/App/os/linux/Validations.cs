@@ -8,7 +8,7 @@
  * File: \Validations.cs
  * Created: Monday, 28th July 2025 3:15:01 pm
  * -----
- * Last Modified: Wednesday, 24th December 2025 10:18:47 pm
+ * Last Modified: Thursday, 25th December 2025 9:52:41 pm
  * Modified By: tutosrive (tutosrive@Dev2Forge.software)
  * -----
  */
@@ -19,16 +19,17 @@ using InitVenv.src.App.utils;
 
 namespace InitVenv.src.App.os.linux
 {
-    class Validators(LinuxRunner runner, string path) : IOsValidators
+    class Validators(LinuxRunner runner, string path, string terminalName) : IOsValidators
     {
         private readonly CommandsLinux _commands = new();
         private readonly LinuxRunner _Runner = runner;
         private readonly string workingDir = path;
+        private readonly string terminal = terminalName;
 
         public async Task<bool> CheckPipPaths()
         {
             bool ok = false;
-            CommandResult commandResult = await this._Runner.ExecuteCommandAsync("cmd.exe", this._commands.PipPaths);
+            CommandResult commandResult = await this._Runner.ExecuteCommandAsync(this.terminal, this._commands.PipPaths);
 
             if (commandResult.ExitCode == 0) { ok = true; }
 
@@ -42,12 +43,12 @@ namespace InitVenv.src.App.os.linux
 
             if (existVenv)
             {
-                commandResult = await this._Runner.ExecuteCommandAsync("cmd.exe", $"cd /d {this.workingDir} && {this._commands.ActivateVenv} && {this._commands.PythonPaths}");
-                if (commandResult.Output.Contains(".venv/bin/python.exe")) { ok = true; }
+                commandResult = await this._Runner.ExecuteCommandAsync(this.terminal, $"cd /d {this.workingDir} && {this._commands.ActivateVenv} && {this._commands.PythonPaths}");
+                if (commandResult.Output.Contains(".venv/bin/python")) { ok = true; }
             }
             else
             {
-                commandResult = await this._Runner.ExecuteCommandAsync("cmd.exe", $"cd /d {this.workingDir} && {this._commands.PythonPaths}");
+                commandResult = await this._Runner.ExecuteCommandAsync(this.terminal, $"cd /d {this.workingDir} && {this._commands.PythonPaths}");
                 if (commandResult.ExitCode == 0) { ok = true; }
             }
             return ok;
@@ -56,7 +57,7 @@ namespace InitVenv.src.App.os.linux
         public async Task<bool> CheckRequirementsPip()
         {
             bool ok = false;
-            CommandResult commandResult = await this._Runner.ExecuteCommandAsync("cmd.exe", $"cd /d {this.workingDir} && {this._commands.ActivateVenv} && {this._commands.CheckRequirementsPip}");
+            CommandResult commandResult = await this._Runner.ExecuteCommandAsync(this.terminal, $"cd /d {this.workingDir} && {this._commands.ActivateVenv} && {this._commands.CheckRequirementsPip}");
 
             if (commandResult.ExitCode == 0) { ok = true; }
             return ok;

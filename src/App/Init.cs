@@ -8,7 +8,7 @@
  * File: \Main.cs
  * Created: Sunday, 27th July 2025 2:17:28 pm
  * -----
- * Last Modified: Wednesday, 24th December 2025 10:31:44 pm
+ * Last Modified: Thursday, 25th December 2025 9:46:35 pm
  * Modified By: tutosrive (tutosrive@Dev2Forge.software)
  * -----
  */
@@ -34,10 +34,10 @@ namespace App
                     await WindowsInit.Run(path);
                     break;
                 case "MacOS":
+                    Console.WriteLine("The system is not allowed right now...");
+                    break;
                 case "Linux":
-                    Console.WriteLine(OS.GetOSInformation());
-                    // await LinuxInit.Run(path);
-                    // Console.WriteLine("The system is not allowed right now...");
+                    await LinuxInit.Run(path, OS.GetCurrentDesktopEnvironment());
                     break;
                 default:
                     throw new Exception("The Operating System isn't allowed!");

@@ -8,12 +8,10 @@
  * File: \OS.cs
  * Created: Friday, 18th July 2025 7:00:41 pm
  * -----
- * Last Modified: Wednesday, 24th December 2025 10:43:04 pm
+ * Last Modified: Thursday, 25th December 2025 9:44:27 pm
  * Modified By: tutosrive (tutosrive@Dev2Forge.software)
  * -----
  */
-
-using System.Runtime.InteropServices;
 
 namespace InitVenv.src.App.utils
 {
@@ -30,29 +28,19 @@ namespace InitVenv.src.App.utils
             return os;
         }
 
-        public static string? GetOSInformation()
+        public static string GetOSTypeID()
         {
-            string? info = "";
+            Dictionary<string, string> fileData = Files.ParseOSReleaseToDictionary();
+            string osTypeID = $"{fileData!.GetValueOrDefault("ID", null)}";
+            
+            return osTypeID;
+        }
 
-            // info += $"OSDescription: {RuntimeInformation.OSDescription}\n";
-            // info += $"OSArchitecture: {RuntimeInformation.OSArchitecture}\n";
-            // info += $"ProcessArchitecture: {RuntimeInformation.ProcessArchitecture}\n";
-            // info += $"FrameworkDescription: {RuntimeInformation.FrameworkDescription}\n";
-            // info += $"RuntimeIdentifier: {RuntimeInformation.RuntimeIdentifier}\n";
-            // info += $"Platform: {Environment.OSVersion.Platform}\n";
-            // info += $"GetType: {Environment.OSVersion.GetType()}\n";
-            // info += $"Version: {Environment.OSVersion.Version}\n";
-            // info += $"VersionString: {Environment.OSVersion.VersionString}\n";
-            // info += $"OSVersion: {Environment.OSVersion}\n";
+        public static string GetCurrentDesktopEnvironment()
+        {
+            string desktopEnvironment = Environment.GetEnvironmentVariable("XDG_CURRENT_DESKTOP") ?? throw new Exception("Don't exists the 'XDG_CURRENT_DESKTOP' environment variable");
 
-
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-            {
-                var distroInfo = File.ReadAllText("/etc/os-release");
-                // Parsear las variables PRETTY_NAME, ID, VERSION_ID, etc.
-                info += distroInfo;
-            }
-            return info;
+            return desktopEnvironment.ToLower();
         }
     }
 }
