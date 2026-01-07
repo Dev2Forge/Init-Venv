@@ -8,7 +8,7 @@
  * File: \Validations.cs
  * Created: Monday, 28th July 2025 3:15:01 pm
  * -----
- * Last Modified: Friday, 26th December 2025 2:31:01 pm
+ * Last Modified: Tuesday, 6th January 2026 9:03:05 pm
  * Modified By: tutosrive (tutosrive@Dev2Forge.software)
  * -----
  */
@@ -28,9 +28,14 @@ namespace InitVenv.src.App.os.linux
         public async Task<bool> CheckPipPaths()
         {
             bool ok = false;
-            CommandResult commandResult = await this._Runner.ExecuteCommandAsync(this._commands.PipPaths);
+            CommandResult commandResult = await this._Runner.ExecuteCommandAsync($"cd {this.workingDir} && {this._commands.ActivateVenv} && {this._commands.PipPaths}");
+            
+            if (commandResult.Output.Contains($"{this.venvName}/bin/pip3"))
+            {
+                ok = true;
+            }
 
-            if (commandResult.ExitCode == 0) { ok = true; }
+            // if (commandResult.ExitCode == 0) { ok = true; }
 
             return ok;
         }
@@ -42,11 +47,11 @@ namespace InitVenv.src.App.os.linux
 
             if (existVenv)
             {
-                commandResult = await this._Runner.ExecuteCommandAsync($"cd {this.workingDir} && {this._commands.ActivateVenv} && {this._commands.PythonPaths}");
-                if (commandResult.Output.Contains($"{this.venvName}/bin/python3")) { ok = true; }
+                if (this._Runner.FindActualVenvName(this.workingDir) != null) { ok = true; }
             }
             else
             {
+                // Check if exist python on the system
                 commandResult = await this._Runner.ExecuteCommandAsync($"cd {this.workingDir} && {this._commands.PythonPaths}");
                 if (commandResult.ExitCode == 0) { ok = true; }
             }
@@ -57,7 +62,6 @@ namespace InitVenv.src.App.os.linux
         {
             bool ok = false;
             CommandResult commandResult = await this._Runner.ExecuteCommandAsync($"cd {this.workingDir} && {this._commands.ActivateVenv} && {this._commands.CheckRequirementsPip}");
-
             if (commandResult.ExitCode == 0) { ok = true; }
             return ok;
         }

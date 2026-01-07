@@ -8,7 +8,7 @@
  * File: \Start.cs
  * Created: Sunday, 27th July 2025 8:31:25 pm
  * -----
- * Last Modified: Friday, 26th December 2025 2:36:11 pm
+ * Last Modified: Tuesday, 6th January 2026 9:08:39 pm
  * Modified By: tutosrive (tutosrive@Dev2Forge.software)
  * -----
  */
@@ -30,6 +30,7 @@ namespace InitVenv.src.App.os.linux
             CommandsLinux commands = new(venvName);
 
             CheckPath(validators, path);
+            
             bool venvIsOld = await TryCreateVenv(validators, runner, commands, path);
             await TryInstallRequirements(validators, runner, commands, path, venvIsOld);
             await TryActivateVenv(validators, runner, commands, path, venvName);
@@ -50,7 +51,7 @@ namespace InitVenv.src.App.os.linux
 
             if (!venvExists && pythonIsOk)
             {
-                await r.ExecuteCommandAsync(c.CreateVenv, keep: true);
+                await r.ExecuteCommandAsync(c.CreateVenv);
             }
 
             return venvExists;
@@ -63,10 +64,7 @@ namespace InitVenv.src.App.os.linux
 
             if (pythonIsOk)
             {
-                await r.ExecuteCommandAsync($"{c.ActivateVenv} && {_showVenvContentToUser}", keep: false);
-                
-                Console.WriteLine($"[ INFO ] Launching interactive shell with virtual environment: {venvName}");
-                Console.WriteLine($"[ INFO ] Directory: {p}");
+                await r.ExecuteCommandAsync($"{c.ActivateVenv} && {_showVenvContentToUser}");
                 
                 Environment.SetEnvironmentVariable("INIT_VENV_PATH", p);
                 Environment.SetEnvironmentVariable("INIT_VENV_NAME", venvName);
@@ -80,23 +78,31 @@ namespace InitVenv.src.App.os.linux
         {
             string completeCommand = $"cd {p} && {c.ActivateVenv} && {c.RequirementsInstall}";
             bool pipIsOk = await v.CheckPipPaths();
+            
             bool fileRequirementsExists = v.CheckRequirementsFile();
             bool requirementsIsInstall;
 
-            if (pipIsOk && fileRequirementsExists)
+            if (!fileRequirementsExists)
             {
-                if (!isOldVenv)
-                {
-                    await r.ExecuteCommandAsync(completeCommand, keep: true);
-                }
-                else
-                {
-                    requirementsIsInstall = await v.CheckRequirementsPip();
+                Console.WriteLine("[ INFO ] The requirements file don't exists.");
+                return;
+            }
 
-                    if (!requirementsIsInstall)
-                    {
-                        await r.ExecuteCommandAsync(completeCommand, keep: true);
-                    }
+            if (!pipIsOk)
+            {
+                throw new Exception("[ INFO ] The pip paths aren't OK.");
+            }
+
+            if (!isOldVenv)
+            {
+                await r.ExecuteCommandAsync(completeCommand, false);
+            }
+            else
+            {
+                requirementsIsInstall = await v.CheckRequirementsPip();
+                if (!requirementsIsInstall)
+                {
+                    await r.ExecuteCommandAsync(completeCommand);
                 }
             }
         }
