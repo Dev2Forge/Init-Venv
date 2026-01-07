@@ -8,15 +8,13 @@
  * File: \Main.cs
  * Created: Sunday, 27th July 2025 2:17:28 pm
  * -----
- * Last Modified: Friday, 26th December 2025 2:23:00 pm
+ * Last Modified: Tuesday, 6th January 2026 6:33:24 pm
  * Modified By: tutosrive (tutosrive@Dev2Forge.software)
  * -----
  */
 
 using InitVenv.src.App.utils;
-using InitVenv.src.App.os;
 using InitVenv.src.App.os.windows;
-using System.Threading.Tasks;
 using InitVenv.src.App.os.linux;
 
 namespace App

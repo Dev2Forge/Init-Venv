@@ -8,7 +8,7 @@
  * File: \Program.cs
  * Created: Friday, 18th July 2025 7:00:41 pm
  * -----
- * Last Modified: Friday, 26th December 2025 2:13:40 pm
+ * Last Modified: Tuesday, 6th January 2026 9:07:27 pm
  * Modified By: tutosrive (tutosrive@Dev2Forge.software)
  * -----
  */
@@ -22,7 +22,7 @@ namespace InitVenv
     {
         public static async Task Main(string[] args)
         {
-            Console.WriteLine("---------\nInit-Venv (C) 2025 - Dev2Forge\nAll Rights Reserved.\n---------\n");
+            Console.WriteLine("---------\nInit-Venv (C) 2025 - Dev2Forge\nVisit https://pypi.org/project/initvenv/\nAll Rights Reserved.\n---------\n");
 
             try
             {
