@@ -8,7 +8,7 @@
  * File: \Validations.cs
  * Created: Monday, 28th July 2025 3:15:01 pm
  * -----
- * Last Modified: Tuesday, 6th January 2026 9:03:05 pm
+ * Last Modified: Wednesday, 7th January 2026 11:08:08 am
  * Modified By: tutosrive (tutosrive@Dev2Forge.software)
  * -----
  */
@@ -30,12 +30,7 @@ namespace InitVenv.src.App.os.linux
             bool ok = false;
             CommandResult commandResult = await this._Runner.ExecuteCommandAsync($"cd {this.workingDir} && {this._commands.ActivateVenv} && {this._commands.PipPaths}");
             
-            if (commandResult.Output.Contains($"{this.venvName}/bin/pip3"))
-            {
-                ok = true;
-            }
-
-            // if (commandResult.ExitCode == 0) { ok = true; }
+            if (commandResult.Output.Contains($"{this.venvName}/bin/pip3")){ ok = true; }
 
             return ok;
         }
